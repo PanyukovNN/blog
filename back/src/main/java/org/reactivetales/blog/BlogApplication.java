@@ -1,4 +1,4 @@
-package org.example.blog;
+package org.reactivetales.blog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
