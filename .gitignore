@@ -1,0 +1,7 @@
+/.gradle/
+/.idea/
+/password
+**.jar
+back/build/
+**.txt
+**.iml
