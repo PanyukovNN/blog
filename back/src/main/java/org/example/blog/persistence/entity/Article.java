@@ -18,9 +18,9 @@ public class Article {
     @GeneratedValue(generator = "uuid-gen")
     private String id;
 
-    @Column(length = 32, name = "header", columnDefinition = "Заголовок статьи")
+    @Column(length = 32, name = "header")
     private String header;
 
-    @Column(length = 128, name = "content", columnDefinition = "Содержимое статьи")
+    @Column(length = 128, name = "content")
     private String content;
 }
