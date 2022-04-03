@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/article")
+@RequestMapping("/v1/articles")
 public class ArticleController {
     private final ArticleRepository articleRepository;
 
@@ -24,24 +24,27 @@ public class ArticleController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping(value = "/create-update/{id}")
-    public ArticleDto createOrUpdate(@PathVariable(required = false) String id,
-                                     CreateArticleRequest createArticleDto) {
-        Article article = null;
+    @GetMapping("/{id}")
+    public ArticleDto get(@PathVariable(required = false) String id) {
+        Article article = articleRepository.findById(id).orElseThrow(() -> new IllegalStateException("Сущность не существует!"));
+        return new ArticleDto(article);
+    }
 
-        if (StringUtils.hasText(id)) {
-            article = articleRepository.findById(id).get();
-        } else {
-            article = new Article();
-        }
+    @PostMapping()
+    public ArticleDto createOrUpdate(@RequestBody CreateArticleRequest createArticleDto) {
+        Article article = StringUtils.hasText(createArticleDto.getId()) ?
+                articleRepository.getById(createArticleDto.getId())
+                : new Article();
 
         article.setHeader(createArticleDto.getTitle());
         article.setContent(createArticleDto.getContent());
 
+        articleRepository.save(article);
+
         return new ArticleDto(article);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable String id) {
         articleRepository.deleteById(id);
     }
