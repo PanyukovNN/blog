@@ -1,15 +1,19 @@
 import '../App.css';
 
 /**
- * Элемент списка статей на главной странице
+ * Articles list element
  *
- * @param article сущность статьи
- * @returns элемент списка статей
+ * @param article entity
+ * @returns articles list element
  */
 export const ArticleListElement = ({article}) => {
 
+    const navigateToArticlePage = () => {
+        window.location.href = "/article/" + article.id;
+    }
+
     return (
-        <div className={"article-list-element"}>
+        <div className="article-list-element" onClick={navigateToArticlePage}>
             <input className="article-list-element-id" type={"hidden"} value={article.id}/>
 
             <div className="article-list-element-header">

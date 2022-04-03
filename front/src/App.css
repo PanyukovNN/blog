@@ -21,7 +21,7 @@
 }
 
 .articles-list {
-    width: 450px;
+    width: 780px;
 
     margin: 50px auto;
 }
@@ -33,6 +33,8 @@
 
     border: 1px rgba(0, 0, 0, .3) solid;
     border-radius: 10px;
+
+    cursor: pointer;
 }
 .article-list-element-header {
     font-size: 20px;
@@ -42,6 +44,39 @@
 }
 .article-list-element-description {
 
+}
+
+.article {
+    width: 780px;
+
+    margin: 30px auto 50px;
+}
+.article-control-btns-wrap {
+    text-align: right;
+}
+.article-control-btns-wrap Button {
+    margin-left: 10px;
+}
+.article-header {
+    width: 100%;
+
+    margin-bottom: 15px;
+
+    border: none;
+    border-radius: 15px;
+
+    font-size: 34px;
+    font-weight: bold;
+}
+.article-header:focus {
+    outline: none;
+}
+.article-header::placeholder {
+    color: rgba(0, 0, 0, .5);
+}
+
+.editor-spinner {
+    color: rgba(0, 0, 0, .5);
 }
 
 .exception-page-wrap {
@@ -56,13 +91,11 @@
     border-radius: 10px;
     overflow: hidden;
 }
-
 .exception-page-text-wrap {
     text-align: center;
     padding-top: 118px;
     color: #cdd4de;
 }
-
 .exception-page-text-wrap h1 {
     font-weight: 900;
     font-size: 165px;
@@ -70,18 +103,15 @@
     margin-bottom: -10px;
     opacity: 0.6;
 }
-
 .exception-page-text-wrap h2 {
     font-weight: 700;
     font-size: 34px;
     margin-bottom: 6px;
     opacity: 0.9;
 }
-
 .exception-page-header {
     margin-bottom: 30px !important;
 }
-
 .exception-page-back-to-home-link {
     display: inline-block;
     margin-top: 100px;
