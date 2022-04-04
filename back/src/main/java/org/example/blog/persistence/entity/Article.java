@@ -21,6 +21,6 @@ public class Article {
     @Column(length = 32, name = "header")
     private String header;
 
-    @Column(length = 128, name = "content")
+    @Column(name = "content")
     private String content;
 }
