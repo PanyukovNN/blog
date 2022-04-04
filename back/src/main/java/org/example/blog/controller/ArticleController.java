@@ -35,14 +35,14 @@ public class ArticleController {
     }
 
     /**
-     * @param createArticleDto createArticleDto.id - unique field for every article
-     *                         createArticleDto.title - main header for article
-     *                         createArticleDto.content - text for article
+     * @param createArticleRequest createArticleRequest.id - unique field for every article
+     *                             createArticleRequest.title - main header for article
+     *                             createArticleRequest.content - text for article
      * @return created or updated article
      */
     @PostMapping("/delete")
-    public ArticleDto createOrUpdate(@RequestBody CreateArticleRequest createArticleDto) {
-        return new ArticleDto(articleService.createOrUpdate(createArticleDto));
+    public ArticleDto createOrUpdate(@RequestBody CreateArticleRequest createArticleRequest) {
+        return new ArticleDto(articleService.createOrUpdate(createArticleRequest));
     }
 
     /**
