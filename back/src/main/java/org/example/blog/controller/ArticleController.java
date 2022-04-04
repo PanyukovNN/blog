@@ -3,9 +3,7 @@ package org.example.blog.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.blog.dto.CreateArticleRequest;
 import org.example.blog.persistence.dto.ArticleDto;
-import org.example.blog.persistence.entity.Article;
-import org.example.blog.persistence.repository.ArticleRepository;
-import org.springframework.util.StringUtils;
+import org.example.blog.service.ArticleService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,38 +13,43 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping("/v1/articles")
 public class ArticleController {
-    private final ArticleRepository articleRepository;
+    private final ArticleService articleService;
 
+    /**
+     * @return all articles from the system
+     */
     @GetMapping("/all")
     public List<ArticleDto> all() {
-        return articleRepository.findAll().stream()
+        return articleService.getAllArticles().stream()
                 .map(ArticleDto::new)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * @param id - unique field for every article
+     * @return required article
+     */
     @GetMapping("/{id}")
     public ArticleDto get(@PathVariable(required = false) String id) {
-        Article article = articleRepository.findById(id).orElseThrow(() -> new IllegalStateException("Сущность не существует!"));
-        return new ArticleDto(article);
+        return new ArticleDto(articleService.getArticleById(id));
     }
 
-    @PostMapping()
+    /**
+     * @param createArticleDto createArticleDto.id - unique field for every article
+     *                         createArticleDto.title - main header for article
+     *                         createArticleDto.content - text for article
+     * @return created or updated article
+     */
+    @PostMapping("/delete")
     public ArticleDto createOrUpdate(@RequestBody CreateArticleRequest createArticleDto) {
-        Article article = StringUtils.hasText(createArticleDto.getId()) ?
-                articleRepository.getById(createArticleDto.getId())
-                : new Article();
-
-        article.setHeader(createArticleDto.getTitle());
-        article.setContent(createArticleDto.getContent());
-
-        articleRepository.save(article);
-
-        return new ArticleDto(article);
+        return new ArticleDto(articleService.createOrUpdate(createArticleDto));
     }
 
+    /**
+     * @param id unique field of the article that has to be deleted
+     */
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable String id) {
-        articleRepository.deleteById(id);
+        articleService.delete(id);
     }
-
 }
