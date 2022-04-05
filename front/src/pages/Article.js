@@ -13,7 +13,9 @@ export const Article = () => {
     const urlParams = useParams();
     const articleId = urlParams.id;
 
-    const article = {id: 1, header: "Заголовок " + articleId, content: "Здесь будет красивое содержание статьи"};
+    const articleContent = "Здесь будет красивое содержание статьи"
+
+    const article = {id: 1, header: "Заголовок " + articleId, content: articleContent};
 
     const handleEdit = () => {
         window.location.href = "/editor/" + articleId;
@@ -28,7 +30,7 @@ export const Article = () => {
     }
 
     return (
-        <div className="article">
+        <div className="article article-width">
             <input className="article-list-element-id" type={"hidden"} value={articleId}/>
 
             <div className="article-control-btns-wrap">

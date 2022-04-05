@@ -24,7 +24,7 @@ export const ArticleEditor = () => {
     }
 
     return (
-        <div className="article">
+        <div className="article-editor article-width">
             <input className="article-list-element-id" type={"hidden"} value={articleId}/>
 
             <input className="article-header" type="text" value={(newHeader) => setHeader(newHeader)} placeholder={"Заголовок"}/>

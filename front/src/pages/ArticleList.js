@@ -38,7 +38,7 @@ export const ArticleList = () => {
     }
 
     return (
-        <div className="articles-list">
+        <div className="articles-list article-width">
             {articleListElements}
         </div>
     );

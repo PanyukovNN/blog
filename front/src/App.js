@@ -8,6 +8,7 @@ import {NetworkErrorPage} from "./pages/exception/NetworkErrorPage";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {Article} from "./pages/Article";
 import {ArticleEditor} from "./pages/ArticleEditor";
+import {FooterComponent} from "./components/FooterComponent";
 
 function App() {
 
@@ -26,6 +27,8 @@ function App() {
                     <Route path="/network-error" element={<NetworkErrorPage/>}/>
                 </Routes>
             </Router>
+
+            <FooterComponent/>
         </div>
     );
 }

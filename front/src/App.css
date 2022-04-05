@@ -1,55 +1,71 @@
+html {
+    background-color: #f0f0f0;
+    font-family: Fira Sans,sans-serif;
+}
+
 .App {
+    background-color: #f0f0f0;
 }
 
 .navbar {
     max-height: 50px;
-}
-/* нижняя рамка навигационной панели */
-.navbar:before {
-    content: "";
-    position: absolute;
-    left: calc(50% - 200px);
-    bottom: 0;
-    height: 1px;
-    width: 400px;
-    margin: 0 auto;
-    border-bottom: 1px rgba(0, 0, 0, .5) solid;
+
+    background-color: white;
+
+    border-bottom: 1px solid #dedede;
 }
 .navbar-nav {
     margin-left: auto;
     margin-right: auto;
 }
 
-.articles-list {
-    width: 780px;
+.article,
+.articles-list,
+.article-editor {
+    /* Сумма отступов, для прибития футера к низу */
+    min-height: calc(100vh - 20px - 50px - 50px - 150px);
+    margin: 12px auto 60px auto;
+}
 
-    margin: 50px auto;
+.article-width {
+    width: 780px;
+}
+
+.articles-list {
+    margin: 12px auto 60px auto;
 }
 .article-list-element {
-    margin-top: 15px;
     margin-bottom: 15px;
+    padding: 16px 20px;
 
-    padding: 15px;
-
-    border: 1px rgba(0, 0, 0, .3) solid;
-    border-radius: 10px;
-
-    cursor: pointer;
+    background-color: white;
 }
 .article-list-element-header {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 1.25rem;
+    font-weight: 500;
 
     margin-bottom: 15px;
+
+    cursor: pointer;
+
+    transition: .2s ease-in-out;
+}
+.article-list-element-header:hover {
+    color: #4c8eab;
 }
 .article-list-element-description {
 
 }
+.article-list-element-read-more-btn {
+    margin-top: 18px;
+}
 
-.article {
-    width: 780px;
+.article,
+.article-editor {
+    /*margin-bottom: 15px;*/
+    padding: 16px 20px;
 
-    margin: 30px auto 50px;
+    background-color: white;
 }
 .article-control-btns-wrap {
     text-align: right;
@@ -63,7 +79,6 @@
     margin-bottom: 15px;
 
     border: none;
-    border-radius: 15px;
 
     font-size: 34px;
     font-weight: bold;
@@ -125,4 +140,34 @@
     cursor: pointer;
     text-decoration: none;
     color: black;
+}
+
+.footer {
+}
+.footer-top {
+    min-height: 100px;
+
+    background-color: #2c3135;
+}
+.footer-bottom {
+    height: 48px;
+    display: flex;
+
+    color: white;
+
+    background-color: #1d2023;
+}
+.footer-bottom_content {
+    display: flex;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+.footer-bottom_link {
+    display: flex;
+
+    color: #bdcdd6;
+
+    align-items: center;
+    justify-content: center;
 }
