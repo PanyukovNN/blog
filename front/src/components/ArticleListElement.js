@@ -23,7 +23,7 @@ export const ArticleListElement = ({article}) => {
             </div>
 
             <div className="article-list-element-description">
-                {article.description}
+                {article.content}
             </div>
 
             <Button className="article-list-element-read-more-btn"

@@ -1,7 +1,9 @@
 import '../App.css';
-import {React} from 'react'
+import {React, useEffect, useState} from 'react'
 import {useParams} from "react-router";
 import Button from "react-bootstrap/Button";
+import {getReq} from "../service/RequestService";
+import {BACK_URL} from "../Constants";
 
 /**
  * Article page
@@ -13,9 +15,24 @@ export const Article = () => {
     const urlParams = useParams();
     const articleId = urlParams.id;
 
-    const articleContent = "Здесь будет красивое содержание статьи"
+    const [article, setArticle] = useState({});
 
-    const article = {id: 1, header: "Заголовок " + articleId, content: articleContent};
+    useEffect(
+        () => {
+            getReq(BACK_URL + "/article/" + articleId)
+                .then((response) => {
+                    if (response && response.data) {
+                        return response.data;
+                    }
+
+                    return {};
+                })
+                .then((articleEntity) => {
+                    setArticle(articleEntity);
+                });
+        },
+        [])
+
 
     const handleEdit = () => {
         window.location.href = "/editor/" + articleId;

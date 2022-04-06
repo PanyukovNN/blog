@@ -1,4 +1,4 @@
-package org.example.blog.persistence.entity;
+package org.reactivetales.blog.persistence.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,11 +14,11 @@ public class Article {
 
     @Id
     @Column(length = 40, name = "id")
-    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     private String id;
 
-    @Column(length = 32, name = "header")
+    @Column(length = 256, name = "header")
     private String header;
 
     @Column(name = "content")

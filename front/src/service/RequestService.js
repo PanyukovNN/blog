@@ -39,7 +39,8 @@ const processResponse = (axiosResponse) => {
         })
         .catch((error) => {
             if (error.response && error.response.data && error.response.message) {
-                showAlert(error.response.data.message);
+                // TODO добавить алерт
+                // showAlert(error.response.data.message);
             } else {
                 if (error.message && error.message === "Network Error") {
                     window.location.href = "/network-error";
@@ -47,7 +48,7 @@ const processResponse = (axiosResponse) => {
                     return;
                 }
 
-                showAlert(error.response.data);
+                // showAlert(error.response.data);
             }
         });
 }

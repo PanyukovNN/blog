@@ -1,6 +1,6 @@
-package org.example.blog.persistence.repository;
+package org.reactivetales.blog.repository;
 
-import org.example.blog.persistence.entity.Article;
+import org.reactivetales.blog.persistence.entity.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
