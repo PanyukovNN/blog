@@ -11,5 +11,5 @@ dependencies {
 
 bootJar {
     archiveVersion = ''
-    mainClass = 'org.example.blog.BlogApplication'
+    mainClass = 'org.reactivetales.blog.BlogApplication'
 }

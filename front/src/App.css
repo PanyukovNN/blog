@@ -1,38 +1,128 @@
 .App {
-  text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navbar {
+    max-height: 50px;
+}
+/* нижняя рамка навигационной панели */
+.navbar:before {
+    content: "";
+    position: absolute;
+    left: calc(50% - 200px);
+    bottom: 0;
+    height: 1px;
+    width: 400px;
+    margin: 0 auto;
+    border-bottom: 1px rgba(0, 0, 0, .5) solid;
+}
+.navbar-nav {
+    margin-left: auto;
+    margin-right: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.articles-list {
+    width: 780px;
+
+    margin: 50px auto;
+}
+.article-list-element {
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    padding: 15px;
+
+    border: 1px rgba(0, 0, 0, .3) solid;
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+.article-list-element-header {
+    font-size: 20px;
+    font-weight: bold;
+
+    margin-bottom: 15px;
+}
+.article-list-element-description {
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.article {
+    width: 780px;
+
+    margin: 30px auto 50px;
+}
+.article-control-btns-wrap {
+    text-align: right;
+}
+.article-control-btns-wrap Button {
+    margin-left: 10px;
+}
+.article-header {
+    width: 100%;
+
+    margin-bottom: 15px;
+
+    border: none;
+    border-radius: 15px;
+
+    font-size: 34px;
+    font-weight: bold;
+}
+.article-header:focus {
+    outline: none;
+}
+.article-header::placeholder {
+    color: rgba(0, 0, 0, .5);
 }
 
-.App-link {
-  color: #61dafb;
+.editor-spinner {
+    color: rgba(0, 0, 0, .5);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.exception-page-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 600px;
+    z-index: 1;
+    font-family: Roboto, sans-serif;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.exception-page-text-wrap {
+    text-align: center;
+    padding-top: 118px;
+    color: #cdd4de;
+}
+.exception-page-text-wrap h1 {
+    font-weight: 900;
+    font-size: 165px;
+    line-height: 1;
+    margin-bottom: -10px;
+    opacity: 0.6;
+}
+.exception-page-text-wrap h2 {
+    font-weight: 700;
+    font-size: 34px;
+    margin-bottom: 6px;
+    opacity: 0.9;
+}
+.exception-page-header {
+    margin-bottom: 30px !important;
+}
+.exception-page-back-to-home-link {
+    display: inline-block;
+    margin-top: 100px;
+    font-weight: 300;
+    font-size: 12px;
+    text-transform: uppercase;
+    border: 1px solid #6c6c6c;
+    padding: 8px 14px;
+    border-radius: 4px;
+    opacity: 0.4;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
 }
