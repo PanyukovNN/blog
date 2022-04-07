@@ -1,6 +1,7 @@
 import '../App.css';
 import Button from "react-bootstrap/Button";
 import {React} from "react";
+import parse from 'html-react-parser'
 
 /**
  * Articles list element
@@ -23,7 +24,7 @@ export const ArticleListElement = ({article}) => {
             </div>
 
             <div className="article-list-element-description">
-                {article.content}
+                {parse(article.content)}
             </div>
 
             <Button className="article-list-element-read-more-btn"

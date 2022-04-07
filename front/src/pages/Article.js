@@ -2,8 +2,8 @@ import '../App.css';
 import {React, useEffect, useState} from 'react'
 import {useParams} from "react-router";
 import Button from "react-bootstrap/Button";
-import {getReq} from "../service/RequestService";
-import {BACK_URL} from "../Constants";
+import {deleteArticleRequest, getArticlePromise} from "../service/ArticleService";
+import parse from "html-react-parser";
 
 /**
  * Article page
@@ -15,20 +15,15 @@ export const Article = () => {
     const urlParams = useParams();
     const articleId = urlParams.id;
 
+    const [renderedContent, setRenderedContent] = useState("")
     const [article, setArticle] = useState({});
 
     useEffect(
         () => {
-            getReq(BACK_URL + "/article/" + articleId)
-                .then((response) => {
-                    if (response && response.data) {
-                        return response.data;
-                    }
-
-                    return {};
-                })
+            getArticlePromise(articleId)
                 .then((articleEntity) => {
                     setArticle(articleEntity);
+                    setRenderedContent(parse(articleEntity.content));
                 });
         },
         [])
@@ -42,7 +37,10 @@ export const Article = () => {
         let result = window.confirm("Вы уверены, что хотите удалить статью?");
 
         if (result) {
-            // реализовать
+            deleteArticleRequest(articleId)
+                .then(() => {
+                    window.location.href = "/";
+                })
         }
     }
 
@@ -60,7 +58,7 @@ export const Article = () => {
             </div>
 
             <div>
-                {article.content}
+                {renderedContent}
             </div>
         </div>
     );

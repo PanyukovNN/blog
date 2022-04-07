@@ -37,6 +37,10 @@ public class ArticleService {
     }
 
     public void delete(String id) {
+        if (!articleRepository.existsById(id)) {
+            throw new IllegalStateException("Article not found!");
+        }
+
         articleRepository.deleteById(id);
     }
 }

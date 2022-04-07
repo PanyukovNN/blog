@@ -9,8 +9,12 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {Article} from "./pages/Article";
 import {ArticleEditor} from "./pages/ArticleEditor";
 import {FooterComponent} from "./components/FooterComponent";
+import * as AlertService from "./service/AlertService";
+import {useAlert} from "react-alert";
 
 function App() {
+
+    AlertService.setAlert(useAlert())
 
     return (
         <div className="App">

@@ -1,8 +1,8 @@
 import '../App.css';
 import {React, useEffect, useState} from 'react'
 import {ArticleListElement} from "../components/ArticleListElement";
-import {getReq} from "../service/RequestService";
-import {BACK_URL} from "../Constants";
+import Spinner from "react-bootstrap/Spinner";
+import {getAllArticlesPromise} from "../service/ArticleService";
 
 /**
  * Main page with articles list
@@ -11,36 +11,39 @@ import {BACK_URL} from "../Constants";
  */
 export const ArticleList = () => {
 
+    const [articlesLoading, setArticlesLoading] = useState(true);
     const [articleListElements, setArticleListElements] = useState([]);
 
     useEffect(
         () => {
-            getReq(BACK_URL + "/article/all")
-                .then((response) => {
-                    if (response && response.data) {
-                        return response.data;
+            getAllArticlesPromise()
+                .then((articleListEntities) => {
+                    const renderedArticleListElements = articleListEntities.map(
+                        article => <ArticleListElement article={article} />
+                    );
+
+                    if (articleListEntities.length !== 0) {
+                        setArticleListElements(renderedArticleListElements);
+                    } else {
+                        setArticleListElements(noArticlesElement);
                     }
 
-                    return [];
-                })
-                .then((articleListEntities) => {
-                    let renderedArticleListElements = [];
-
-                    articleListEntities.forEach(article =>
-                        renderedArticleListElements.push(
-                            <ArticleListElement article={article} />
-                        )
-                    )
-
-                    setArticleListElements(renderedArticleListElements);
+                    setArticlesLoading(false);
                 })
         },
         []
     );
 
+    const noArticlesElement = (
+        <div className="article-list-element">Не найдено ни одной статьи</div>
+    );
+
     return (
         <div className="articles-list article-width">
-            {articleListElements}
+            {articlesLoading && (
+                <Spinner className="editor-spinner" animation="border" />
+            )}
+            {!articlesLoading && articleListElements}
         </div>
     );
 }

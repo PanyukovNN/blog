@@ -1,4 +1,5 @@
 import axios from "axios";
+import {showAlert} from "./AlertService";
 
 export function postReq(url, body) {
     let postResponse = axios.post(url,
@@ -39,8 +40,7 @@ const processResponse = (axiosResponse) => {
         })
         .catch((error) => {
             if (error.response && error.response.data && error.response.message) {
-                // TODO добавить алерт
-                // showAlert(error.response.data.message);
+                showAlert(error.response.data.message);
             } else {
                 if (error.message && error.message === "Network Error") {
                     window.location.href = "/network-error";
@@ -48,7 +48,7 @@ const processResponse = (axiosResponse) => {
                     return;
                 }
 
-                // showAlert(error.response.data);
+                showAlert(error.response.data);
             }
         });
 }

@@ -4,8 +4,8 @@ import {useParams} from "react-router";
 import Button from "react-bootstrap/Button";
 import {Editor} from "@tinymce/tinymce-react/lib/cjs/main/ts";
 import Spinner from "react-bootstrap/Spinner";
-import {getReq, postReq} from "../service/RequestService";
-import {BACK_URL} from "../Constants";
+import {createUpdateArticleRequest, getArticlePromise} from "../service/ArticleService";
+import {showAlert} from "../service/AlertService";
 
 /**
  * Editor page
@@ -15,15 +15,13 @@ import {BACK_URL} from "../Constants";
 export const ArticleEditor = () => {
 
     const urlParams = useParams();
-    const articleId = urlParams.id;
+    const [articleId, setArticleId] = useState(urlParams.id);
 
     const [articleLoading, setArticleLoading] = useState(true);
     const [editorLoading, setEditorLoading] = useState(true);
     const [article, setArticle] = useState({});
     const [header, setHeader] = useState("");
     const [text, setText] = useState("");
-
-    useEffect(() => console.log(header), [header])
 
     useEffect(
         () => {
@@ -33,17 +31,10 @@ export const ArticleEditor = () => {
                 return;
             }
 
-            // TODO убрать дублирование c Article.js
-            getReq(BACK_URL + "/article/" + articleId)
-                .then((response) => {
-                    if (response && response.data) {
-                        return response.data;
-                    }
-
-                    return {};
-                })
+            getArticlePromise(articleId)
                 .then((articleEntity) => {
                     setArticle(articleEntity);
+                    setHeader(articleEntity.header);
                     setArticleLoading(false);
                 });
         },
@@ -56,17 +47,18 @@ export const ArticleEditor = () => {
             content: text
         }
 
-        postReq(BACK_URL + "/article/create-update", body)
-            .then((response) => {
-                if (response && response.data) {
-                    return response.data;
-                }
-
-                return {};
-            })
+        createUpdateArticleRequest(body)
             .then((articleEntity) => {
                 setArticle(articleEntity);
-                setHeader(articleEntity.header)
+                setHeader(articleEntity.header);
+
+                showAlert(articleId
+                    ? "Статья успешно обновлена!"
+                    : "Статья успешно создана!");
+
+                if (!articleId) {
+                    setArticleId(articleEntity.id);
+                }
             })
     }
 
@@ -99,13 +91,12 @@ export const ArticleEditor = () => {
                     branding: false,
                     plugins: [
                         'advlist autolink lists link image charmap print preview anchor',
-                        'searchreplace visualblocks code fullscreen',
-                        'insertdatetime media table paste code help wordcount'
+                        'searchreplace visualblocks code codesample fullscreen',
+                        'insertdatetime media table paste help wordcount'
                     ],
                     toolbar1: 'undo redo | formatselect | ' +
-                        'bold italic backcolor | alignleft aligncenter ' +
-                        'alignright alignjustify | bullist numlist outdent indent | ' +
-                        'removeformat',
+                        'bold italic codesample backcolor | alignleft aligncenter ' +
+                        'alignright alignjustify | bullist numlist outdent indent',
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                 }}
             />

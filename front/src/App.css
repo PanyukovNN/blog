@@ -96,20 +96,19 @@ html {
 }
 
 .exception-page-wrap {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin-left: auto;
+    margin-right: auto;
+
     width: 800px;
-    height: 600px;
+    height: 560px;
     z-index: 1;
     font-family: Roboto, sans-serif;
-    border-radius: 10px;
+
     overflow: hidden;
 }
 .exception-page-text-wrap {
     text-align: center;
-    padding-top: 118px;
+    padding-top: 70px;
     color: #cdd4de;
 }
 .exception-page-text-wrap h1 {
@@ -130,7 +129,7 @@ html {
 }
 .exception-page-back-to-home-link {
     display: inline-block;
-    margin-top: 100px;
+    margin-top: 60px;
     font-weight: 300;
     font-size: 12px;
     text-transform: uppercase;
