@@ -3,9 +3,9 @@ import {React} from 'react';
 import {Container, Nav, Navbar} from "react-bootstrap";
 
 /**
- * Навигационная панель
+ * Navigation panel component
  *
- * @returns навигационная панель
+ * @returns navigation panel component
  */
 export const NavbarComponent = () => {
 
@@ -16,10 +16,9 @@ export const NavbarComponent = () => {
             <Container fluid>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
-                    <Nav
-                        className="my-2 my-lg-0"
-                        navbarScroll>
+                    <Nav className="my-2 my-lg-0" navbarScroll>
                         <Nav.Link href="/" style={pathname === "/" ? {"font-weight": "bold"} : {}}>Главная</Nav.Link>
+                        <Nav.Link href="/editor" style={pathname === "/editor" ? {"font-weight": "bold"} : {}}>Создать статью</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

@@ -3,11 +3,11 @@ import {React, useEffect, useState} from 'react'
 import {ArticleListElement} from "../components/ArticleListElement";
 
 /**
- * Главная страница со списком статей
+ * Main page with articles list
  *
- * @returns главная страница
+ * @returns main page
  */
-export const Main = () => {
+export const ArticleList = () => {
 
     const articleListEntities = [
         {id: 1, header: "Заголовок 1", description: "Описание 1"},
