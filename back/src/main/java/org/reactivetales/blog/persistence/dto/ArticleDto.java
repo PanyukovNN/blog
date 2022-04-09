@@ -1,10 +1,8 @@
-package org.example.blog.persistence.dto;
+package org.reactivetales.blog.persistence.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.blog.persistence.entity.Article;
-
-import javax.persistence.Column;
+import org.reactivetales.blog.persistence.entity.Article;
 
 @Data
 @NoArgsConstructor

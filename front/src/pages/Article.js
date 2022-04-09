@@ -1,7 +1,9 @@
 import '../App.css';
-import {React} from 'react'
+import {React, useEffect, useState} from 'react'
 import {useParams} from "react-router";
 import Button from "react-bootstrap/Button";
+import {deleteArticleRequest, getArticlePromise} from "../service/ArticleService";
+import parse from "html-react-parser";
 
 /**
  * Article page
@@ -13,7 +15,19 @@ export const Article = () => {
     const urlParams = useParams();
     const articleId = urlParams.id;
 
-    const article = {id: 1, header: "Заголовок " + articleId, content: "Здесь будет красивое содержание статьи"};
+    const [renderedContent, setRenderedContent] = useState("")
+    const [article, setArticle] = useState({});
+
+    useEffect(
+        () => {
+            getArticlePromise(articleId)
+                .then((articleEntity) => {
+                    setArticle(articleEntity);
+                    setRenderedContent(parse(articleEntity.content));
+                });
+        },
+        [])
+
 
     const handleEdit = () => {
         window.location.href = "/editor/" + articleId;
@@ -23,12 +37,15 @@ export const Article = () => {
         let result = window.confirm("Вы уверены, что хотите удалить статью?");
 
         if (result) {
-            // реализовать
+            deleteArticleRequest(articleId)
+                .then(() => {
+                    window.location.href = "/";
+                })
         }
     }
 
     return (
-        <div className="article">
+        <div className="article article-width">
             <input className="article-list-element-id" type={"hidden"} value={articleId}/>
 
             <div className="article-control-btns-wrap">
@@ -41,7 +58,7 @@ export const Article = () => {
             </div>
 
             <div>
-                {article.content}
+                {renderedContent}
             </div>
         </div>
     );

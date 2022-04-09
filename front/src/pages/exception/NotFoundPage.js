@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 /**
- * Страница ошибки 404
+ * Not found exception page
  *
- * @returns страница ошибки 404
+ * @returns Not found exception page
  */
 export const NotFoundPage = () => {
     return (

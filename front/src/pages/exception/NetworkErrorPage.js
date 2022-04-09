@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 /**
- * Страница ошибки отсутствия соединения с сервером
+ * Server unavailable exception page
  *
- * @returns страница ошибки отсутствия соединения с сервером
+ * @returns server unavailable exception page
  */
 export const NetworkErrorPage = () => {
     return (

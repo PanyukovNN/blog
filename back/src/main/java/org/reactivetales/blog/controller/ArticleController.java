@@ -1,18 +1,20 @@
-package org.example.blog.controller;
+package org.reactivetales.blog.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.blog.dto.CreateArticleRequest;
-import org.example.blog.persistence.dto.ArticleDto;
-import org.example.blog.service.ArticleService;
+import org.reactivetales.blog.persistence.dto.CreateArticleRequest;
+import org.reactivetales.blog.persistence.dto.ArticleDto;
+import org.reactivetales.blog.service.ArticleService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/articles")
+@RequestMapping("/v1/article")
 public class ArticleController {
+
     private final ArticleService articleService;
 
     /**
@@ -40,7 +42,7 @@ public class ArticleController {
      *                             createArticleRequest.content - text for article
      * @return created or updated article
      */
-    @PostMapping("/delete")
+    @PostMapping("/create-update")
     public ArticleDto createOrUpdate(@RequestBody CreateArticleRequest createArticleRequest) {
         return new ArticleDto(articleService.createOrUpdate(createArticleRequest));
     }
