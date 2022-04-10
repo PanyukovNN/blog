@@ -21,6 +21,6 @@ public class Article {
     @Column(length = 256, name = "header")
     private String header;
 
-    @Column(name = "content")
+    @Column(length = Integer.MAX_VALUE, name = "content")
     private String content;
 }

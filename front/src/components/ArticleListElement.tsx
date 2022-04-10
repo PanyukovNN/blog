@@ -1,7 +1,12 @@
 import '../App.css';
-import Button from "react-bootstrap/Button";
-import {React} from "react";
+import React, {FC} from "react";
 import parse from 'html-react-parser'
+import Button from "react-bootstrap/Button";
+import {IArticle} from "../util/CommonTypes";
+
+interface ArticleListElementProps {
+    article: IArticle
+}
 
 /**
  * Articles list element
@@ -9,7 +14,7 @@ import parse from 'html-react-parser'
  * @param article entity
  * @returns articles list element
  */
-export const ArticleListElement = ({article}) => {
+export const ArticleListElement: FC<ArticleListElementProps> = ({article}) => {
 
     const navigateToArticlePage = () => {
         window.location.href = "/article/" + article.id;
@@ -19,9 +24,9 @@ export const ArticleListElement = ({article}) => {
         <div className="article-list-element">
             <input className="article-list-element-id" type={"hidden"} value={article.id}/>
 
-            <div className="article-list-element-header" onClick={navigateToArticlePage}>
+            <h1 className="article-list-element-header" onClick={navigateToArticlePage}>
                 {article.header}
-            </div>
+            </h1>
 
             <div className="article-list-element-description">
                 {parse(article.content)}

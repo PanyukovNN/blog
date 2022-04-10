@@ -19,12 +19,27 @@ html {
     margin-right: auto;
 }
 
-.content,
+h1 {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+    margin: 0 0 4px !important;
+    font-weight: 500 !important;
+}
+h2 {
+    font-size: 1.25rem !important;
+    line-height: 1.625 !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+}
+
+.content {
+    /* Сумма отступов, для прибития футера к низу */
+    min-height: calc(100vh - 60px - 150px);
+}
+
 .article,
 .articles-list,
 .article-editor {
-    /* Сумма отступов, для прибития футера к низу */
-    min-height: calc(100vh - 20px - 50px - 50px - 150px);
     margin: 12px auto 60px auto;
 }
 
@@ -42,9 +57,6 @@ html {
     background-color: white;
 }
 .article-list-element-header {
-    font-size: 1.25rem;
-    font-weight: 500;
-
     margin-bottom: 15px;
 
     cursor: pointer;
@@ -63,7 +75,6 @@ html {
 
 .article,
 .article-editor {
-    /*margin-bottom: 15px;*/
     padding: 16px 20px;
 
     background-color: white;
@@ -80,9 +91,6 @@ html {
     margin-bottom: 15px;
 
     border: none;
-
-    font-size: 34px;
-    font-weight: bold;
 }
 .article-header:focus {
     outline: none;
@@ -93,6 +101,9 @@ html {
 
 .editor-spinner {
     color: rgba(0, 0, 0, .5);
+}
+.editor-navigate-to-article-btn {
+    margin-left: 15px;
 }
 
 .exception-page-wrap {
