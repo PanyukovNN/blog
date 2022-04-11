@@ -1,6 +1,6 @@
 import axios from "axios";
 import {IArticle, ICreateUpdateArticleRequest, NotificationType } from "../util/CommonTypes";
-import {BACK_URL, EMPTY_ARTICLE} from "../util/Constants";
+import {BACK_URL} from "../util/Constants";
 import {showNotification} from "./NotificationService";
 
 export async function fetchAllArticles() {
@@ -25,7 +25,7 @@ export async function fetchArticle(id: string) {
     } catch (error) {
         processError(error);
 
-        return EMPTY_ARTICLE;
+        return null;
     }
 }
 
@@ -46,7 +46,7 @@ export async function createUpdateArticle(createUpdateRequest: ICreateUpdateArti
     } catch (error) {
         processError(error);
 
-        return EMPTY_ARTICLE;
+        return null;
     }
 }
 
@@ -59,7 +59,7 @@ export async function deleteArticle(id: string) {
     } catch (error) {
         processError(error);
 
-        return EMPTY_ARTICLE;
+        return null;
     }
 }
 

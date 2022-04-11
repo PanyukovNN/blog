@@ -19,21 +19,22 @@ function App() {
     return (
         <div className="App">
             <ReactNotifications />
-            <NavbarComponent/>
 
-            <div className="content">
                 <Router>
-                    <Routes>
-                        <Route path='/' element={<ArticleList/>}/>
-                        <Route path='/article/:id' element={<Article/>}/>
-                        <Route path='/editor' element={<ArticleEditor/>}/>
-                        <Route path='/editor/:id' element={<ArticleEditor/>}/>
+                    <NavbarComponent/>
+                    <div className="content">
+                        <Routes>
+                            <Route path='/' element={<ArticleList/>}/>
+                            <Route path='/article/:id' element={<Article/>}/>
+                            <Route path='/editor' element={<ArticleEditor key={"/editor"}/>}/>
+                            <Route path='/editor/:id' element={<ArticleEditor key={"/editor/id"}/>}/>
 
-                        <Route path="*" element={<NotFoundPage/>}/>
-                        <Route path="/network-error" element={<NetworkErrorPage/>}/>
-                    </Routes>
+                            <Route path="*" element={<NotFoundPage/>}/>
+                            <Route path="/network-error" element={<NetworkErrorPage/>}/>
+                        </Routes>
+                    </div>
+
                 </Router>
-            </div>
 
             <FooterComponent/>
         </div>

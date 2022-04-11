@@ -1,11 +1,10 @@
 import '../App.css';
 import React, {FC, useEffect, useState} from 'react'
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import Button from "react-bootstrap/Button";
 import {Editor} from "@tinymce/tinymce-react/lib/cjs/main/ts";
 import Spinner from "react-bootstrap/Spinner";
 import {fetchArticle, createUpdateArticle} from "../service/ArticleService";
-import { EMPTY_ARTICLE } from '../util/Constants';
 import { IArticle, ICreateUpdateArticleRequest } from '../util/CommonTypes';
 
 /**
@@ -15,14 +14,22 @@ import { IArticle, ICreateUpdateArticleRequest } from '../util/CommonTypes';
  */
 export const ArticleEditor: FC = () => {
 
+    const navigate = useNavigate();
+
     const urlParams = useParams() as any;
 
+    // Содержание статьи
     const [text, setText] = useState<string>("");
+    // Заголовок статьи
     const [header, setHeader] = useState<string>("");
-    const [article, setArticle] = useState<IArticle>(EMPTY_ARTICLE);
+    const [article, setArticle] = useState<IArticle | null>();
     const [articleId, setArticleId] = useState<string>(urlParams.id);
+    // Флаг загрузки редактора
     const [editorLoading, setEditorLoading] = useState<boolean>(true);
+    // Флаг загрузки статьи
     const [articleLoading, setArticleLoading] = useState<boolean>(true);
+    // Флаг исполнения запроса сохранения/обновления статьи
+    const [updatingLoading, setUpdatingLoading] = useState<boolean>(false);
 
     useEffect(
         () => {
@@ -34,14 +41,21 @@ export const ArticleEditor: FC = () => {
 
             fetchArticle(articleId)
                 .then((articleEntity) => {
+                    setArticleLoading(false);
+
+                    if (articleEntity === null) {
+                        return;
+                    }
+
                     setArticle(articleEntity);
                     setHeader(articleEntity.header);
-                    setArticleLoading(false);
                 });
         },
         []);
 
     const handleSave = () => {
+        setUpdatingLoading(true);
+
         const createUpdateRequest: ICreateUpdateArticleRequest = {
             id: articleId ? articleId : "",
             header: header,
@@ -50,7 +64,9 @@ export const ArticleEditor: FC = () => {
 
         createUpdateArticle(createUpdateRequest)
             .then((articleEntity) => {
-                if (articleEntity === EMPTY_ARTICLE) {
+                setUpdatingLoading(false);
+
+                if (articleEntity === null) {
                     return;
                 }
 
@@ -64,7 +80,9 @@ export const ArticleEditor: FC = () => {
     }
 
     const handleToArticle = () => {
-        window.location.href = "/article/" + article.id;
+        if (article) {
+            navigate("/article/" + article.id, { replace: true });
+        }
     }
 
     return (
@@ -85,7 +103,7 @@ export const ArticleEditor: FC = () => {
 
             <Editor
                 tinymceScriptSrc="https://unpkg.com/tinymce@5.10.3/tinymce.min.js"
-                initialValue={article.content}
+                initialValue={article?.content}
                 onEditorChange={(newText) => setText(newText)}
                 disabled={articleLoading}
                 onInit={() => {
@@ -118,7 +136,8 @@ export const ArticleEditor: FC = () => {
                         variant="outline-primary"
                         onClick={handleSave}
                         disabled={articleLoading}>
-                    {articleId ? 'Обновить' : 'Сохранить'}
+                    {updatingLoading && (<Spinner className="editor-spinner" animation="border" />)}
+                    {!updatingLoading && articleId ? 'Обновить' : 'Сохранить'}
                 </Button>
             )}
 

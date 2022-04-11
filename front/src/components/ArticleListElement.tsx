@@ -3,6 +3,7 @@ import React, {FC} from "react";
 import parse from 'html-react-parser'
 import Button from "react-bootstrap/Button";
 import {IArticle} from "../util/CommonTypes";
+import {useNavigate} from "react-router-dom";
 
 interface ArticleListElementProps {
     article: IArticle
@@ -16,8 +17,10 @@ interface ArticleListElementProps {
  */
 export const ArticleListElement: FC<ArticleListElementProps> = ({article}) => {
 
+    const navigate = useNavigate();
+
     const navigateToArticlePage = () => {
-        window.location.href = "/article/" + article.id;
+        navigate("/article/" + article.id, { replace: true });
     }
 
     return (
