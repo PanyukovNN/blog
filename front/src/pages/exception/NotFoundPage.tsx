@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 /**
- * Not found exception page
+ * Not found exception page.
  *
  * @returns Not found exception page
  */

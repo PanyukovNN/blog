@@ -2,7 +2,7 @@ import '../App.css';
 import React from 'react';
 
 /**
- * Bottom panel component
+ * Bottom panel component.
  *
  * @returns bottom panel component
  */

@@ -10,7 +10,7 @@ interface ArticleListElementProps {
 }
 
 /**
- * Articles list element
+ * Articles list element.
  *
  * @param article entity
  * @returns articles list element
@@ -25,7 +25,11 @@ export const ArticleListElement: FC<ArticleListElementProps> = ({article}) => {
 
     return (
         <div className="article-list-element">
-            <input className="article-list-element-id" type={"hidden"} value={article.id}/>
+            <div className="article-list-element-top">
+                <div className="article-list-element-creation-date-time">
+                    {article.creationDateTime}
+                </div>
+            </div>
 
             <h1 className="article-list-element-header" onClick={navigateToArticlePage}>
                 {article.header}

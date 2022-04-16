@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 /**
- * Server unavailable exception page
+ * Server unavailable exception page.
  *
  * @returns server unavailable exception page
  */

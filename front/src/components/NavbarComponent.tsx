@@ -4,7 +4,7 @@ import {Container, Nav, Navbar} from "react-bootstrap";
 import { LinkContainer } from 'react-router-bootstrap';
 
 /**
- * Navigation panel component
+ * Navigation panel component.
  *
  * @returns navigation panel component
  */
