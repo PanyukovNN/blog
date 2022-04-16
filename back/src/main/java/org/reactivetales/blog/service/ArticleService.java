@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.reactivetales.blog.persistence.dto.CreateArticleRequest;
 import org.reactivetales.blog.persistence.entity.Article;
 import org.reactivetales.blog.repository.ArticleRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -16,7 +17,7 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     public List<Article> getAllArticles() {
-        return articleRepository.findAll();
+        return articleRepository.findAll(Sort.by(Sort.Direction.DESC, "creationDateTime"));
     }
 
     public Article getArticleById(String id) {
