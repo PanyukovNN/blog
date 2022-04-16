@@ -61,8 +61,6 @@ export const Article: FC = () => {
                 <Spinner className="editor-spinner" animation="border" />
             )}
 
-            <input className="article-list-element-id" type={"hidden"} value={articleId}/>
-
             {!articleLoading && <div className="article-control-btns-wrap">
                 <Button variant="outline-primary" onClick={handleEdit}>Редактировать</Button>
                 <Button variant="outline-danger" onClick={handleDelete}>Удалить</Button>

@@ -1,7 +1,8 @@
 export interface IArticle {
-    id:      string;
-    header:  string;
-    content: string;
+    id:                 string;
+    header:             string;
+    content:            string;
+    creationDateTime?:  string;
 }
 
 export interface ICreateUpdateArticleRequest {

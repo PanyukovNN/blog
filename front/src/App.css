@@ -56,6 +56,14 @@ h2 {
 
     background-color: white;
 }
+.article-list-element-top {
+    height: 24px;
+}
+.article-list-element-creation-date-time {
+    color: #777;
+    font-size: .8rem;
+    line-height: 1rem;
+}
 .article-list-element-header {
     margin-bottom: 15px;
 

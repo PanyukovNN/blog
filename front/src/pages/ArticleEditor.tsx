@@ -87,8 +87,6 @@ export const ArticleEditor: FC = () => {
 
     return (
         <div className="article-editor article-width">
-            <input className="article-list-element-id" type={"hidden"} value={articleId}/>
-
             {!editorLoading && <h1>
                 <input className="article-header"
                        type="text"
@@ -136,7 +134,7 @@ export const ArticleEditor: FC = () => {
                         variant="outline-primary"
                         onClick={handleSave}
                         disabled={articleLoading}>
-                    {updatingLoading && (<Spinner className="editor-spinner" animation="border" />)}
+                    {updatingLoading && (<Spinner className="editor-spinner" size="sm" animation="border" />)}
                     {!updatingLoading && articleId ? 'Обновить' : 'Сохранить'}
                 </Button>
             )}
