@@ -75,8 +75,12 @@ function processError(error: any) {
     let isErrorInstance = error instanceof Error;
 
     let message;
-    if (isErrorInstance && error.response && error.response.data && error.response.data.message) {
-        message = error.response.data.message;
+    if (isErrorInstance) {
+        if (error.response && error.response.data && error.response.data.message) {
+            message = error.response.data.message;
+        } else {
+            message = error.message;
+        }
     } else {
         message = 'Unknown Error';
     }
