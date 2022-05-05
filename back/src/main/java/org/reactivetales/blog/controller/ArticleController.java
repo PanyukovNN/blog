@@ -1,5 +1,6 @@
 package org.reactivetales.blog.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.reactivetales.blog.persistence.dto.ArticleDto;
 import org.reactivetales.blog.persistence.dto.CreateArticleRequest;
@@ -22,10 +23,8 @@ public class ArticleController {
 
     private final ArticleService articleService;
 
-    /**
-     * @return articles page
-     */
     @GetMapping("/page")
+    @Operation(summary = "get articles page")
     public Page<ArticleDto> page(@RequestParam(required = false, defaultValue = "0")
                                  @Min(value = 0, message = "Page number couldn't be less than 0")
                                  Integer number,
@@ -37,32 +36,24 @@ public class ArticleController {
                 .map(articleService::convertToDto);
     }
 
-    /**
-     * @param id - unique field for every article
-     * @return required article
-     */
     @GetMapping("/{id}")
+    @Operation(summary = "get article by id")
     public ArticleDto get(@PathVariable(required = false) String id) {
         return articleService.convertToDto(
                 articleService.getArticleById(id)
         );
     }
 
-    /**
-     * @param createArticleRequest request
-     * @return created or updated article
-     */
     @PostMapping("/create-update")
+    @Operation(summary = "create or update article")
     public ArticleDto createOrUpdate(@RequestBody CreateArticleRequest createArticleRequest) {
         return articleService.convertToDto(
                 articleService.createOrUpdate(createArticleRequest)
         );
     }
 
-    /**
-     * @param id unique field of the article that has to be deleted
-     */
     @DeleteMapping(value = "/{id}")
+    @Operation(summary = "delete article by id")
     public void delete(@PathVariable String id) {
         articleService.delete(id);
     }
