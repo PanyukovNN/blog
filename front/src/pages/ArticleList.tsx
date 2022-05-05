@@ -2,8 +2,11 @@ import '../App.css';
 import React, {FC, useEffect, useState} from 'react'
 import {ArticleListElement} from "../components/ArticleListElement";
 import Spinner from "react-bootstrap/Spinner";
-import { fetchAllArticles } from '../service/ArticleService';
-import { IArticle } from '../util/CommonTypes';
+import {fetchArticlesPage} from '../service/ArticleService';
+import {IArticlePage} from '../util/CommonTypes';
+import {renderPagination} from "../util/PaginationUtil";
+import {useNavigate} from "react-router";
+import {DEFAULT_ARTICLES_PAGE_SIZE} from "../util/Constants";
 
 /**
  * Main page with articles list
@@ -12,34 +15,54 @@ import { IArticle } from '../util/CommonTypes';
  */
 export const ArticleList : FC = () => {
 
-    const [articles, setArticles] = useState<IArticle[]>([]);
+    const navigate = useNavigate();
+
+    // Only way, which makes it possible to extract named url params, for example /?number=0&size=5
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageNumber = urlParams.get("number") as any;
+    const pageSize = urlParams.get("size") as any;
+
+    const [articlesPage, setArticlesPage] = useState<IArticlePage | null>();
     const [articlesLoading, setArticlesLoading] = useState<boolean>(true);
+    const [pagination, setPagination] = useState() as any;
 
     useEffect(
         () => {
-            fetchAllArticles().then((response) => {
-                setArticles(response);
+            fetchArticlesPage(pageNumber, pageSize).then((articlePage) => {
                 setArticlesLoading(false);
+
+                if (articlePage === null) {
+                    return;
+                }
+
+                setArticlesPage(articlePage);
+                setPagination(renderPagination(articlePage.number, articlePage.totalPages, onPageChange));
             })
         },
-        []
+        [pageNumber, pageSize]
     );
 
     const noArticlesElement = (
         <div className="article-list-element">Не найдено ни одной статьи</div>
     );
 
+    const onPageChange = (number: number) => {
+        navigate("/?number=" + number + "&size=" + DEFAULT_ARTICLES_PAGE_SIZE, { replace: false });
+    }
+
     return (
         <div className="articles-list article-width">
             {articlesLoading && (
                 <Spinner className="editor-spinner" animation="border" />
             )}
-            {!articlesLoading && articles.map(article =>
+            {!articlesLoading && articlesPage?.content.map(article =>
                 <ArticleListElement article={article}/>
             )}
 
+            {!articlesLoading && pagination}
+
             {/* Если нет ни одной статьи, то отображаем пустой блок */}
-            {!articlesLoading && articles.length === 0 && noArticlesElement}
+            {!articlesLoading && articlesPage?.content.length === 0 && noArticlesElement}
         </div>
     );
 }

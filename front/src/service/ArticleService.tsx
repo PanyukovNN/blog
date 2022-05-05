@@ -1,18 +1,26 @@
 import axios from "axios";
-import {IArticle, ICreateUpdateArticleRequest, NotificationType } from "../util/CommonTypes";
-import {BACK_URL} from "../util/Constants";
+import {IArticle, IArticlePage, ICreateUpdateArticleRequest, NotificationType} from "../util/CommonTypes";
+import {BACK_URL, DEFAULT_ARTICLES_PAGE_SIZE} from "../util/Constants";
 import {showNotification} from "./NotificationService";
 
-export async function fetchAllArticles() {
+export async function fetchArticlesPage(pageNumber?: number, pageSize?: number) {
     try {
-        const response = await axios.get<IArticle[]>(BACK_URL + "/article/all",
-            { headers : {'Content-Type': 'application/json'} })
+        const params = {
+            number: pageNumber ? pageNumber : "0",
+            size: pageSize ? pageSize : DEFAULT_ARTICLES_PAGE_SIZE
+        }
+
+        const response = await axios.get<IArticlePage>(BACK_URL + "/article/page",
+            {
+                params: params,
+                headers : {'Content-Type': 'application/json'}
+            })
 
         return response.data;
     } catch (error) {
         processError(error);
 
-        return [];
+        return null;
     }
 }
 
@@ -64,7 +72,18 @@ export async function deleteArticle(id: string) {
 }
 
 function processError(error: any) {
-    let message = error instanceof Error ? error.message : 'Unknown Error';
+    let isErrorInstance = error instanceof Error;
+
+    let message;
+    if (isErrorInstance) {
+        if (error.response && error.response.data && error.response.data.message) {
+            message = error.response.data.message;
+        } else {
+            message = error.message;
+        }
+    } else {
+        message = 'Unknown Error';
+    }
 
     if (message === "Network Error") {
         window.location.href = "/network-error";

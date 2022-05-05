@@ -34,22 +34,23 @@ h2 {
 
 .content {
     /* Сумма отступов, для прибития футера к низу */
-    min-height: calc(100vh - 60px - 150px);
+    min-height: calc(100vh - 198px);
+
+    padding-top: 12px;
+    padding-bottom: 60px;
 }
 
 .article,
 .articles-list,
 .article-editor {
-    margin: 12px auto 60px auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .article-width {
     width: 780px;
 }
 
-.articles-list {
-    margin: 12px auto 60px auto;
-}
 .article-list-element {
     margin-bottom: 15px;
     padding: 16px 20px;
@@ -131,16 +132,15 @@ h2 {
     color: #cdd4de;
 }
 .exception-page-text-wrap h1 {
-    font-weight: 900;
-    font-size: 165px;
-    line-height: 1;
-    margin-bottom: -10px;
+    font-weight: 900 !important;
+    font-size: 165px !important;
+    line-height: 1 !important;
     opacity: 0.6;
 }
 .exception-page-text-wrap h2 {
-    font-weight: 700;
-    font-size: 34px;
-    margin-bottom: 6px;
+    font-weight: 700 !important;
+    font-size: 34px !important;
+    margin-bottom: 6px !important;
     opacity: 0.9;
 }
 .exception-page-header {

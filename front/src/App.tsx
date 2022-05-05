@@ -5,7 +5,7 @@ import 'react-notifications-component/dist/theme.css'
 import 'tinymce/skins/ui/oxide/content.min.css';
 import React from "react";
 import {ArticleList} from "./pages/ArticleList";
-import {NotFoundPage} from "./pages/exception/NotFoundPage";
+import {NotFoundErrorPage} from "./pages/exception/NotFoundErrorPage";
 import {NavbarComponent} from "./components/NavbarComponent";
 import {NetworkErrorPage} from "./pages/exception/NetworkErrorPage";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
@@ -24,12 +24,12 @@ function App() {
                     <NavbarComponent/>
                     <div className="content">
                         <Routes>
-                            <Route path='/' element={<ArticleList/>}/>
-                            <Route path='/article/:id' element={<Article/>}/>
-                            <Route path='/editor' element={<ArticleEditor key={"/editor"}/>}/>
-                            <Route path='/editor/:id' element={<ArticleEditor key={"/editor/id"}/>}/>
+                            <Route path="/" element={<ArticleList/>}/>
+                            <Route path="/article/:id" element={<Article/>}/>
+                            <Route path="/editor" element={<ArticleEditor key={"/editor"}/>}/>
+                            <Route path="/editor/:id" element={<ArticleEditor key={"/editor/id"}/>}/>
 
-                            <Route path="*" element={<NotFoundPage/>}/>
+                            <Route path="*" element={<NotFoundErrorPage/>}/>
                             <Route path="/network-error" element={<NetworkErrorPage/>}/>
                         </Routes>
                     </div>

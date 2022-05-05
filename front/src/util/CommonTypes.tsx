@@ -5,6 +5,13 @@ export interface IArticle {
     creationDateTime?:  string;
 }
 
+export interface IArticlePage {
+    content:    IArticle[];
+    number:     number;
+    size:       number;
+    totalPages: number;
+}
+
 export interface ICreateUpdateArticleRequest {
     id      : string;
     header  : string;
