@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.reactivetales.blog.persistence.dto.ArticleDto;
 import org.reactivetales.blog.persistence.dto.CreateArticleRequest;
 import org.reactivetales.blog.service.ArticleService;
+import org.reactivetales.blog.service.mapper.ArticleMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import static org.reactivetales.blog.util.Constants.DEFAULT_ARTICLE_PAGE_SIZE;
 @RequestMapping("/v1/article")
 public class ArticleController {
 
+    private final ArticleMapper articleMapper;
     private final ArticleService articleService;
 
     @GetMapping("/page")
@@ -33,13 +35,13 @@ public class ArticleController {
                                  @Max(value = 20, message = "Page size couldn't be grater than 1")
                                  Integer size) {
         return articleService.getArticlesPage(number, size)
-                .map(articleService::convertToDto);
+                .map(articleMapper::articleToDto);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "get article by id")
     public ArticleDto get(@PathVariable(required = false) String id) {
-        return articleService.convertToDto(
+        return articleMapper.articleToDto(
                 articleService.getArticleById(id)
         );
     }
@@ -47,7 +49,7 @@ public class ArticleController {
     @PostMapping("/create-update")
     @Operation(summary = "create or update article")
     public ArticleDto createOrUpdate(@RequestBody CreateArticleRequest createArticleRequest) {
-        return articleService.convertToDto(
+        return articleMapper.articleToDto(
                 articleService.createOrUpdate(createArticleRequest)
         );
     }

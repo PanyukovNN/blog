@@ -12,7 +12,7 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {Article} from "./pages/Article";
 import {ArticleEditor} from "./pages/ArticleEditor";
 import {FooterComponent} from "./components/FooterComponent";
-import { ReactNotifications } from 'react-notifications-component';
+import {ReactNotifications} from 'react-notifications-component';
 
 function App() {
 
