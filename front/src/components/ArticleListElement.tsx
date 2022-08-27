@@ -24,26 +24,24 @@ export const ArticleListElement: FC<ArticleListElementProps> = ({article}) => {
     }
 
     return (
-        <div className="article-list-element">
+        <article className="article-list-element">
+            <h1 className="article-list-element-header" onClick={navigateToArticlePage}>
+                {article.header}
+            </h1>
+
             <div className="article-list-element-top">
                 <div className="article-list-element-creation-date-time">
                     {article.creationDateTime}
                 </div>
             </div>
 
-            <h1 className="article-list-element-header" onClick={navigateToArticlePage}>
-                {article.header}
-            </h1>
-
             <div className="article-list-element-description">
                 {parse(article.content)}
             </div>
 
-            <Button className="article-list-element-read-more-btn"
-                    variant="outline-primary"
-                    onClick={navigateToArticlePage}>
-                Читать
-            </Button>
-        </div>
+            <div className="article-list-element-continue-link" onClick={navigateToArticlePage}>
+                Continue...
+            </div>
+        </article>
     )
 }

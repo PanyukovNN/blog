@@ -8,6 +8,6 @@ import org.reactivetales.blog.persistence.entity.Article;
 @Mapper(componentModel = "spring")
 public interface ArticleMapper {
 
-    @Mapping(target = "creationDateTime", expression = "java(org.reactivetales.blog.util.DateTimeUtil.FRONT_DT_FORMATTER.format(article.getCreationDateTime()))")
+    @Mapping(target = "creationDateTime", dateFormat = "dd MMMM yyyy")
     ArticleDto articleToDto(Article article);
 }
