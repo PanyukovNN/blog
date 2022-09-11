@@ -17,3 +17,20 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+  liquibase:
+    change-log: classpath:db/changelog/changelog.xml
+    enabled: true
+
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+jwt:
+  secret: abcd
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

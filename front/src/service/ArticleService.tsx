@@ -2,6 +2,7 @@ import axios from "axios";
 import {IArticle, IArticlePage, ICreateUpdateArticleRequest, NotificationType} from "../util/CommonTypes";
 import {BACK_URL, DEFAULT_ARTICLES_PAGE_SIZE} from "../util/Constants";
 import {showNotification} from "./NotificationService";
+import {getAccessToken} from "./AuthService";
 
 export async function fetchArticlesPage(pageNumber?: number, pageSize?: number) {
     try {
@@ -40,7 +41,7 @@ export async function fetchArticle(id: string) {
 export async function createUpdateArticle(createUpdateRequest: ICreateUpdateArticleRequest) {
     try {
         const response = await axios.post<IArticle>(
-            BACK_URL + "/article/create-update",
+            BACK_URL + "/article/admin/create-update",
             JSON.stringify(createUpdateRequest),
             { headers : {'Content-Type': 'application/json'} }
         );
@@ -60,7 +61,7 @@ export async function createUpdateArticle(createUpdateRequest: ICreateUpdateArti
 
 export async function deleteArticle(id: string) {
     try {
-        const response = await axios.delete<IArticle>(BACK_URL + "/article/" + id,
+        const response = await axios.delete<IArticle>(BACK_URL + "/article/admin/" + id,
             { headers : {'Content-Type': 'application/json'} })
 
         return response.data;

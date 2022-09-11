@@ -2,6 +2,7 @@ import '../App.css';
 import React, {CSSProperties, FC} from 'react';
 import {Container, Nav, Navbar} from "react-bootstrap";
 import { LinkContainer } from 'react-router-bootstrap';
+import {signOut} from "../service/AuthService";
 
 /**
  * Navigation panel component.
@@ -26,6 +27,12 @@ export const NavbarComponent: FC = () => {
                         <LinkContainer to="/editor">
                             <Nav.Link style={pathname === "/editor" ? bold : {}}>Создать статью</Nav.Link>
                         </LinkContainer>
+
+                        <div className="navbar-right-side">
+                            <LinkContainer to="/" onClick={signOut}>
+                                <Nav.Link>Выйти</Nav.Link>
+                            </LinkContainer>
+                        </div>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

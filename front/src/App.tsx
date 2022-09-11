@@ -13,6 +13,11 @@ import {Article} from "./pages/Article";
 import {ArticleEditor} from "./pages/ArticleEditor";
 import {FooterComponent} from "./components/FooterComponent";
 import {ReactNotifications} from 'react-notifications-component';
+import RequireAuth from './service/RequireAuth';
+import RedirectAfterAuth from "./service/RedirectAfterAuth";
+import { LoginPage } from './pages/auth/LoginPage';
+import {RegistrationPage} from "./pages/auth/RegistratioinPage";
+import {isLoggedIn} from "./service/AuthService";
 
 function App() {
 
@@ -21,13 +26,16 @@ function App() {
             <ReactNotifications />
 
                 <Router>
-                    <NavbarComponent/>
+                    {isLoggedIn() && <NavbarComponent/>}
                     <div className="content">
                         <Routes>
                             <Route path="/" element={<ArticleList/>}/>
                             <Route path="/article/:id" element={<Article/>}/>
-                            <Route path="/editor" element={<ArticleEditor key={"/editor"}/>}/>
-                            <Route path="/editor/:id" element={<ArticleEditor key={"/editor/id"}/>}/>
+                            <Route path="/editor" element={<RequireAuth><ArticleEditor key={"/editor"}/></RequireAuth>}/>
+                            <Route path="/editor/:id" element={<RequireAuth><ArticleEditor key={"/editor/id"}/></RequireAuth>}/>
+
+                            <Route path="/sign-in" element={<RedirectAfterAuth><LoginPage /></RedirectAfterAuth>} />
+                            <Route path="/sign-up" element={<RedirectAfterAuth><RegistrationPage /></RedirectAfterAuth>} />
 
                             <Route path="*" element={<NotFoundErrorPage/>}/>
                             <Route path="/network-error" element={<NetworkErrorPage/>}/>

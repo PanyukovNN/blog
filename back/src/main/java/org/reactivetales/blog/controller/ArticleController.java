@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
@@ -35,26 +36,26 @@ public class ArticleController {
                                  @Max(value = 20, message = "Page size couldn't be grater than 1")
                                  Integer size) {
         return articleService.getArticlesPage(number, size)
-                .map(articleMapper::articleToDto);
+                .map(articleMapper::convert);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "get article by id")
     public ArticleDto get(@PathVariable(required = false) String id) {
-        return articleMapper.articleToDto(
+        return articleMapper.convert(
                 articleService.getArticleById(id)
         );
     }
 
-    @PostMapping("/create-update")
+    @PostMapping("/admin/create-update")
     @Operation(summary = "create or update article")
-    public ArticleDto createOrUpdate(@RequestBody CreateArticleRequest createArticleRequest) {
-        return articleMapper.articleToDto(
+    public ArticleDto createOrUpdate(@RequestBody @Valid CreateArticleRequest createArticleRequest) {
+        return articleMapper.convert(
                 articleService.createOrUpdate(createArticleRequest)
         );
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/admin/{id}")
     @Operation(summary = "delete article by id")
     public void delete(@PathVariable String id) {
         articleService.delete(id);

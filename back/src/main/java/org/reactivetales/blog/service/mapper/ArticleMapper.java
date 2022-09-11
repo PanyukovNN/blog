@@ -9,5 +9,5 @@ import org.reactivetales.blog.persistence.entity.Article;
 public interface ArticleMapper {
 
     @Mapping(target = "creationDateTime", dateFormat = "dd MMMM yyyy")
-    ArticleDto articleToDto(Article article);
+    ArticleDto convert(Article article);
 }
