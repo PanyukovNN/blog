@@ -40,6 +40,24 @@ h2 {
     padding-bottom: 60px;
 }
 
+.main-photo-wrap {
+    margin: 50px auto;
+
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    text-align: center;
+}
+
+.main-photo-wrap img {
+    margin: -257px 0 0 -268px;
+
+    transform: scale(0.27) translate(0, 5%);
+}
+
 .article,
 .articles-list,
 .article-editor {
