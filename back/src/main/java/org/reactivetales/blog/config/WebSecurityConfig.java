@@ -2,6 +2,7 @@ package org.reactivetales.blog.config;
 
 import lombok.RequiredArgsConstructor;
 import org.reactivetales.blog.service.JwtFilter;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

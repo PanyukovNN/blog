@@ -1,11 +1,14 @@
-package org.reactivetales.blog.controller;
+package org.reactivetales.blog.controller.article;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.reactivetales.blog.persistence.dto.ArticleDto;
 import org.reactivetales.blog.persistence.dto.CreateArticleRequest;
 import org.reactivetales.blog.service.ArticleService;
 import org.reactivetales.blog.service.mapper.ArticleMapper;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +23,8 @@ import static org.reactivetales.blog.util.Constants.DEFAULT_ARTICLE_PAGE_SIZE;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/article")
+@RequestMapping("/api/v1/article")
+@Tag(name = "article", description = "article controller")
 public class ArticleController {
 
     private final ArticleMapper articleMapper;
@@ -41,6 +45,7 @@ public class ArticleController {
 
     @GetMapping("/{id}")
     @Operation(summary = "get article by id")
+    @Cacheable("articles")
     public ArticleDto get(@PathVariable(required = false) String id) {
         return articleMapper.convert(
                 articleService.getArticleById(id)
@@ -49,6 +54,7 @@ public class ArticleController {
 
     @PostMapping("/admin/create-update")
     @Operation(summary = "create or update article")
+    @CachePut("articles")
     public ArticleDto createOrUpdate(@RequestBody @Valid CreateArticleRequest createArticleRequest) {
         return articleMapper.convert(
                 articleService.createOrUpdate(createArticleRequest)

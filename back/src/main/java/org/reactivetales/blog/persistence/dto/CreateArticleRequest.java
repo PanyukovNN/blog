@@ -8,8 +8,8 @@ import javax.validation.constraints.NotEmpty;
 public class CreateArticleRequest {
 
     private String id;
-    @NotEmpty
+    @NotEmpty(message = "header can't be null")
     private String header;
-    @NotEmpty
+    @NotEmpty(message = "content can't be null")
     private String content;
 }
