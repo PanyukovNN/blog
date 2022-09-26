@@ -7,6 +7,7 @@ import org.reactivetales.blog.persistence.dto.ArticleDto;
 import org.reactivetales.blog.persistence.dto.CreateArticleRequest;
 import org.reactivetales.blog.service.ArticleService;
 import org.reactivetales.blog.service.mapper.ArticleMapper;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -45,7 +46,7 @@ public class ArticleController {
 
     @GetMapping("/{id}")
     @Operation(summary = "get article by id")
-    @Cacheable("articles")
+    @Cacheable(value = "articles", key = "#id")
     public ArticleDto get(@PathVariable(required = false) String id) {
         return articleMapper.convert(
                 articleService.getArticleById(id)
@@ -54,7 +55,7 @@ public class ArticleController {
 
     @PostMapping("/admin/create-update")
     @Operation(summary = "create or update article")
-    @CachePut("articles")
+    @CachePut(value = "articles", key = "#result.id")
     public ArticleDto createOrUpdate(@RequestBody @Valid CreateArticleRequest createArticleRequest) {
         return articleMapper.convert(
                 articleService.createOrUpdate(createArticleRequest)
@@ -63,6 +64,7 @@ public class ArticleController {
 
     @DeleteMapping(value = "/admin/{id}")
     @Operation(summary = "delete article by id")
+    @CacheEvict(value = "articles", key = "#id")
     public void delete(@PathVariable String id) {
         articleService.delete(id);
     }
