@@ -49,6 +49,7 @@ export const ArticleEditor: FC = () => {
 
                     setArticle(articleEntity);
                     setHeader(articleEntity.header);
+                    setText(articleEntity.content);
                 });
         },
         []);
