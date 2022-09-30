@@ -3,7 +3,7 @@ package org.reactivetales.blog.service;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import org.reactivetales.blog.model.entity.user.SignInResult;
+import org.reactivetales.blog.model.response.SignInResponse;
 import org.reactivetales.blog.model.entity.user.User;
 import org.reactivetales.blog.model.request.AuthRequest;
 import org.reactivetales.blog.model.request.ChangePasswordRequest;
@@ -54,10 +54,10 @@ public class AuthService {
      * Authenticate user.
      *
      * @param request authentication request
-     * @param timeZone частовой пояс пользователя
-     * @return результат аутентификации пользователя
+     * @param timeZone client time zone
+     * @return sing in info
      */
-    public SignInResult signIn(AuthRequest request, TimeZone timeZone) {
+    public SignInResponse signIn(AuthRequest request, TimeZone timeZone) {
         String username = userRepository.findByEmailIgnoreCase(request.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException(ADMIN_NOT_FOUND_ERROR))
                 .getUsername();
@@ -70,7 +70,7 @@ public class AuthService {
         User user = (User) authentication.getPrincipal();
         String jwt = generateToken(user.getUsername(), timeZone);
 
-        return SignInResult.builder()
+        return SignInResponse.builder()
                 .user(user)
                 .jwt(jwt)
                 .build();
@@ -106,7 +106,7 @@ public class AuthService {
      *
      * @param username name of user
      * @param timeZone client time zone
-     * @return JWT токен
+     * @return jwt token
      */
     private String generateToken(String username, TimeZone timeZone) {
         Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(timeZone.toZoneId()).toInstant());

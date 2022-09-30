@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 /**
- * Ответ на аутентификацию пользователя.
+ * User authentication response.
  */
 @Getter
 @Builder
@@ -12,8 +12,5 @@ public class AuthResponse {
 
     private final UserResponse userResponse;
 
-    /**
-     * Токен доступа в формате JWT.
-     */
     private final String accessToken;
 }

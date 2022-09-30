@@ -7,7 +7,7 @@ import org.reactivetales.blog.model.request.ChangePasswordRequest;
 import org.reactivetales.blog.model.response.AuthResponse;
 import org.reactivetales.blog.model.response.UserResponse;
 import org.reactivetales.blog.model.request.UpdateAdminRequest;
-import org.reactivetales.blog.model.entity.user.SignInResult;
+import org.reactivetales.blog.model.response.SignInResponse;
 import org.reactivetales.blog.model.entity.user.User;
 import org.reactivetales.blog.service.AuthService;
 import org.reactivetales.blog.service.mapper.UserMapper;
@@ -49,15 +49,15 @@ public class AdminAuthController {
      */
     @PostMapping("/sign-in")
     public AuthResponse signIn(@RequestBody @Valid AuthRequest request, TimeZone timeZone) {
-        SignInResult signInResult = authService.signIn(request, timeZone);
+        SignInResponse signInResponse = authService.signIn(request, timeZone);
 
-        User user = signInResult.getUser();
+        User user = signInResponse.getUser();
 
         UserResponse userResponse = userMapper.convert(user);
 
         return AuthResponse.builder()
                 .userResponse(userResponse)
-                .accessToken(signInResult.getJwt())
+                .accessToken(signInResponse.getJwt())
                 .build();
     }
 

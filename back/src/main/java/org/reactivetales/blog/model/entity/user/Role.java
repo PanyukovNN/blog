@@ -7,9 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
-/**
- * Роль пользователя.
- */
 @Data
 @Entity
 @ToString

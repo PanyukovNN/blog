@@ -1,8 +1,8 @@
 package org.reactivetales.blog.model.entity.user;
 
 /**
- * Наименование роли.
- * Должно в точности соответствовать наименованию в базе данных.
+ * Name of roles.
+ * Must correspond roles from db
  */
 public enum RoleName {
 
