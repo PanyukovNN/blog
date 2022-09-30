@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.List;
 
 /**
- * Валидатор паролей.
+ * Password validator.
  */
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 

@@ -12,7 +12,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.reactivetales.blog.util.Constants.PASSWORDS_DO_NOT_MATCH_ERROR_MSG;
 
 /**
- * Аннотация для сравнения пароля с паролем подтверждения.
+ * Compare password validation annotation.
  */
 @Documented
 @Retention(RUNTIME)

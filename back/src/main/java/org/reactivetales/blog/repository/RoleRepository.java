@@ -1,6 +1,6 @@
 package org.reactivetales.blog.repository;
 
-import org.reactivetales.blog.persistence.entity.user.Role;
+import org.reactivetales.blog.model.entity.user.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package org.reactivetales.blog.persistence.entity;
+package org.reactivetales.blog.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

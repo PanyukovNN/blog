@@ -57,6 +57,8 @@ export const ArticleList : FC = () => {
                 <img src={mainPhotoPath} alt={"Here must be my photo"}/>
             </div>
 
+            <div className={"navigation"}></div>
+
             {articlesLoading && (
                 <Spinner className="editor-spinner" animation="border" />
             )}

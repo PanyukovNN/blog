@@ -11,7 +11,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.reactivetales.blog.util.Constants.WRONG_PASSWORD_ERROR_MSG;
 
 /**
- * Аннотация валидации пароля.
+ * Password validation annotation.
  */
 @Documented
 @Retention(RUNTIME)

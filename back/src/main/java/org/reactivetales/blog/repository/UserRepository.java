@@ -1,6 +1,6 @@
 package org.reactivetales.blog.repository;
 
-import org.reactivetales.blog.persistence.entity.user.User;
+import org.reactivetales.blog.model.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -27,20 +27,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return пользователь
      */
     Optional<User> findByEmailIgnoreCase(String email);
-
-    /**
-     * Проверяет существует ли пользователь с заданным именем (без учета регистра).
-     *
-     * @param username имя пользователя
-     * @return пользователь
-     */
-    Boolean existsByUsernameIgnoreCase(String username);
-
-    /**
-     * Существует ли пользовать с данным email (без учета регистра).
-     *
-     * @param email почта пользователя
-     * @return существует ли пользователья
-     */
-    Boolean existsByEmailIgnoreCase(String email);
 }

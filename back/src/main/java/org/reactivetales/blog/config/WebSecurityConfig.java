@@ -2,7 +2,6 @@ package org.reactivetales.blog.config;
 
 import lombok.RequiredArgsConstructor;
 import org.reactivetales.blog.service.JwtFilter;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,8 +27,8 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/v1/auth/**").permitAll()
-                .antMatchers("/v1/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/v1/admin/auth/sign-in").anonymous()
+                .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

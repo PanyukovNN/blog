@@ -1,4 +1,4 @@
-package org.reactivetales.blog.persistence.dto;
+package org.reactivetales.blog.model.response;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Data
 @Builder
-public class ArticleDto implements Serializable {
+public class ArticleResponse implements Serializable {
 
     private String id;
     private String header;
