@@ -16,7 +16,7 @@ spring:
     hibernate:
       ddl-auto: update
   liquibase:
-    change-log: classpath:db/changelog/changelog.xml
+    change-log: classpath:db/changelog/changelog-master.xml
     enabled: true
 
 jasypt:

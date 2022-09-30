@@ -1,8 +1,8 @@
 package org.reactivetales.blog.service;
 
 import lombok.RequiredArgsConstructor;
-import org.reactivetales.blog.persistence.dto.CreateArticleRequest;
-import org.reactivetales.blog.persistence.entity.Article;
+import org.reactivetales.blog.model.request.CreateArticleRequest;
+import org.reactivetales.blog.model.entity.Article;
 import org.reactivetales.blog.repository.ArticleRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,7 +13,10 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
 
-import static org.reactivetales.blog.util.Constants.USER_NOT_FOUND_ERROR;
+import java.time.ZonedDateTime;
+import java.util.TimeZone;
+
+import static org.reactivetales.blog.util.Constants.ARTICLE_NOT_FOUND_ERROR;
 
 @Service
 @RequiredArgsConstructor
@@ -36,16 +39,17 @@ public class ArticleService {
 
     public Article getArticleById(String id) {
         return articleRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND_ERROR));
+                .orElseThrow(() -> new EntityNotFoundException(ARTICLE_NOT_FOUND_ERROR));
     }
 
-    public Article createOrUpdate(CreateArticleRequest createArticleRequest) {
+    public Article createOrUpdate(CreateArticleRequest createArticleRequest, TimeZone timeZone) {
         Article article = StringUtils.hasText(createArticleRequest.getId())
                 ? articleRepository.getReferenceById(createArticleRequest.getId())
                 : new Article();
 
         article.setHeader(createArticleRequest.getHeader());
         article.setContent(createArticleRequest.getContent());
+        article.setCreationDateTime(ZonedDateTime.now(timeZone.toZoneId()).toLocalDateTime());
         articleRepository.save(article);
 
         return article;

@@ -3,11 +3,11 @@ package org.reactivetales.blog.service;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import org.reactivetales.blog.exception.AuthException;
-import org.reactivetales.blog.persistence.entity.user.Role;
-import org.reactivetales.blog.persistence.entity.user.RoleName;
-import org.reactivetales.blog.persistence.entity.user.SignInResult;
-import org.reactivetales.blog.persistence.entity.user.User;
+import org.reactivetales.blog.model.response.SignInResponse;
+import org.reactivetales.blog.model.entity.user.User;
+import org.reactivetales.blog.model.request.AuthRequest;
+import org.reactivetales.blog.model.request.ChangePasswordRequest;
+import org.reactivetales.blog.model.request.UpdateAdminRequest;
 import org.reactivetales.blog.property.JWTProperties;
 import org.reactivetales.blog.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,61 +20,49 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.Set;
 import java.util.TimeZone;
 
 import static org.reactivetales.blog.util.Constants.*;
 
-/**
- * Сервис аутентификации.
- */
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final RoleService roleService;
     private final JWTProperties jwtProperties;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
 
     /**
-     * Регистрация пользователя.
+     * Update admin.
      *
-     * @param userTemplate частично заполненная сущность пользователя
-     * @param timeZone частовой пояс пользователя
+     * @param request update admin request
      */
-    public void signUpAdmin(User userTemplate, TimeZone timeZone) {
-        checkUserExistence(userTemplate);
+    public User updateAdmin(UpdateAdminRequest request) {
+        User admin = userRepository.findById(request.getId())
+                .orElseThrow(() -> new EntityNotFoundException(ADMIN_NOT_AUTHENTICATED_ERROR));
 
-        userTemplate.setPassword(bCryptPasswordEncoder.encode(userTemplate.getPassword()));
-        userTemplate.setCreationDate(LocalDate.now(timeZone.toZoneId()));
-        Set<Role> roles = Set.of(
-                roleService.findByRoleName(RoleName.ROLE_USER),
-                roleService.findByRoleName(RoleName.ROLE_ADMIN)
-        );
-        userTemplate.setRoles(roles);
+        admin.setUsername(request.getUsername());
+        admin.setEmail(request.getEmail());
 
-        // Подтверждение по email, на данный момент отключено
-        userTemplate.setActivationCode(null);
+        SecurityContextHolder.getContext().setAuthentication(null);
 
-        userRepository.save(userTemplate);
+        return userRepository.save(admin);
     }
 
     /**
-     * Провести аутентификацию пользователя.
+     * Authenticate user.
      *
-     * @param email почтовый ящик
-     * @param password пароль
-     * @param timeZone частовой пояс пользователя
-     * @return результат аутентификации пользователя
+     * @param request authentication request
+     * @param timeZone client time zone
+     * @return sing in info
      */
-    public SignInResult signIn(String email, String password, TimeZone timeZone) {
-        String username = userRepository.findByEmailIgnoreCase(email)
-                .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND_ERROR))
+    public SignInResponse signIn(AuthRequest request, TimeZone timeZone) {
+        String username = userRepository.findByEmailIgnoreCase(request.getEmail())
+                .orElseThrow(() -> new EntityNotFoundException(ADMIN_NOT_FOUND_ERROR))
                 .getUsername();
 
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, request.getPassword());
         Authentication authentication = authenticationManager.authenticate(authToken);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -82,18 +70,43 @@ public class AuthService {
         User user = (User) authentication.getPrincipal();
         String jwt = generateToken(user.getUsername(), timeZone);
 
-        return SignInResult.builder()
+        return SignInResponse.builder()
                 .user(user)
                 .jwt(jwt)
                 .build();
     }
 
     /**
-     * Сгенерировать токен пользователя.
+     * Change user password.
      *
-     * @param username имя пользователя
-     * @param timeZone часовой пояс пользователя
-     * @return JWT токен
+     * @param request request params
+     */
+    public void changePassword(ChangePasswordRequest request) {
+        User user = userRepository.findByEmailIgnoreCase(request.getEmail())
+                .orElseThrow(() -> new EntityNotFoundException(ADMIN_NOT_FOUND_ERROR));
+
+        boolean oldPasswordMatches = bCryptPasswordEncoder.matches(request.getOldPassword(), user.getPassword());
+
+        if (!oldPasswordMatches) {
+            throw new IllegalArgumentException(OLD_PASSWORD_DOES_NOT_MATCH_USER_PASSWORD);
+        }
+
+        user.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
+
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user.getUsername(), request.getPassword());
+        Authentication authentication = authenticationManager.authenticate(authToken);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        userRepository.save(user);
+    }
+
+    /**
+     * Generate user token.
+     *
+     * @param username name of user
+     * @param timeZone client time zone
+     * @return jwt token
      */
     private String generateToken(String username, TimeZone timeZone) {
         Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(timeZone.toZoneId()).toInstant());
@@ -103,22 +116,5 @@ public class AuthService {
                 .setExpiration(date)
                 .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecret())
                 .compact();
-    }
-
-    /**
-     * Выбрасываем исключение, если пользователь уже зарегистрирован.
-     *
-     * @param userTemplate частично заполенная сущность пользователя
-     */
-    private void checkUserExistence(User userTemplate) {
-        boolean existsByUsername = userRepository.existsByUsernameIgnoreCase(userTemplate.getUsername());
-        if (existsByUsername) {
-            throw new AuthException(USER_ALREADY_EXISTS_BY_NAME);
-        }
-
-        boolean existsByEmail = userRepository.existsByEmailIgnoreCase(userTemplate.getEmail());
-        if (existsByEmail) {
-            throw new AuthException(USER_ALREADY_EXISTS_BY_EMAIL);
-        }
     }
 }

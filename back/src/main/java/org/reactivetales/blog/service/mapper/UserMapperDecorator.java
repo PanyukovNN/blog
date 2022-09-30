@@ -3,10 +3,10 @@ package org.reactivetales.blog.service.mapper;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import org.reactivetales.blog.persistence.dto.UserDto;
-import org.reactivetales.blog.persistence.entity.user.Role;
-import org.reactivetales.blog.persistence.entity.user.RoleName;
-import org.reactivetales.blog.persistence.entity.user.User;
+import org.reactivetales.blog.model.response.UserResponse;
+import org.reactivetales.blog.model.entity.user.Role;
+import org.reactivetales.blog.model.entity.user.RoleName;
+import org.reactivetales.blog.model.entity.user.User;
 
 import java.util.List;
 import java.util.Map;
@@ -24,14 +24,14 @@ public abstract class UserMapperDecorator {
     );
 
     @AfterMapping
-    public UserDto setRoles(User user, @MappingTarget UserDto userDto) {
+    public UserResponse setRoles(User user, @MappingTarget UserResponse userResponse) {
         List<String> rolesRusName = user.getRoles().stream()
                 .map(this::getRusName)
                 .toList();
 
-        userDto.setRoles(rolesRusName);
+        userResponse.setRoles(rolesRusName);
 
-        return userDto;
+        return userResponse;
     }
 
     /**

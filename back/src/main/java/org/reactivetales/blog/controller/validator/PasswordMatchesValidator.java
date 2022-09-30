@@ -1,6 +1,6 @@
 package org.reactivetales.blog.controller.validator;
 
-import org.reactivetales.blog.persistence.dto.UserSignUpRequest;
+import org.reactivetales.blog.model.request.ConfirmPasswordRequest;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -9,9 +9,9 @@ import java.util.Objects;
 import static org.reactivetales.blog.util.Constants.CONFIRM_PASSWORD_KEY;
 
 /**
- * Валидатор совпадения пароля и пароля подтверждения.
+ * Confirm password validator.
  */
-public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, UserSignUpRequest> {
+public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, ConfirmPasswordRequest> {
 
     private String message;
 
@@ -21,7 +21,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
     }
 
     @Override
-    public boolean isValid(UserSignUpRequest request, ConstraintValidatorContext context) {
+    public boolean isValid(ConfirmPasswordRequest request, ConstraintValidatorContext context) {
         boolean passwordsEquals = Objects.equals(request.getPassword(), request.getConfirmPassword());
 
         if (!passwordsEquals) {
