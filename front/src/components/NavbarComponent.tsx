@@ -1,8 +1,8 @@
 import '../App.css';
 import React, {CSSProperties, FC} from 'react';
-import {Container, Nav, Navbar} from "react-bootstrap";
+import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import { LinkContainer } from 'react-router-bootstrap';
-import {signOut} from "../service/AuthService";
+import {getUser, signOut} from "../service/AuthService";
 
 /**
  * Navigation panel component.
@@ -21,17 +21,23 @@ export const NavbarComponent: FC = () => {
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className="article-width my-2 my-lg-0" navbarScroll>
-                        <LinkContainer to="/">
-                            <Nav.Link style={pathname === "/" ? bold : {}}>Главная</Nav.Link>
-                        </LinkContainer>
                         <LinkContainer to="/editor">
                             <Nav.Link style={pathname === "/editor" ? bold : {}}>Создать статью</Nav.Link>
                         </LinkContainer>
 
                         <div className="navbar-right-side">
-                            <LinkContainer to="/" onClick={signOut}>
-                                <Nav.Link>Выйти</Nav.Link>
-                            </LinkContainer>
+                            <NavDropdown title={getUser()} id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/update-admin">
+                                    Change email
+                                </NavDropdown.Item>
+                                <NavDropdown.Item href="/change-password">
+                                    Change password
+                                </NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <LinkContainer to="/" onClick={signOut}>
+                                    <NavDropdown.Item>Logout</NavDropdown.Item>
+                                </LinkContainer>
+                            </NavDropdown>
                         </div>
                     </Nav>
                 </Navbar.Collapse>

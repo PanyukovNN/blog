@@ -14,11 +14,6 @@ import static org.reactivetales.blog.util.Constants.*;
 @NoArgsConstructor
 public class UpdateAdminRequest {
 
-    private Long id;
-
-    @NotBlank(message = BLANK_USER_NAME_ERROR_MSG)
-    private String username;
-
     @Email(message = WRONG_EMAIL_ERROR_MSG)
     @NotBlank(message = BLANK_EMAIL_ERROR_MSG)
     private String email;

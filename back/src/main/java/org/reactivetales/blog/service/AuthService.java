@@ -3,11 +3,11 @@ package org.reactivetales.blog.service;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import org.reactivetales.blog.model.response.SignInResponse;
 import org.reactivetales.blog.model.entity.user.User;
 import org.reactivetales.blog.model.request.AuthRequest;
 import org.reactivetales.blog.model.request.ChangePasswordRequest;
 import org.reactivetales.blog.model.request.UpdateAdminRequest;
+import org.reactivetales.blog.model.response.SignInResponse;
 import org.reactivetales.blog.property.JWTProperties;
 import org.reactivetales.blog.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +22,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.TimeZone;
 
-import static org.reactivetales.blog.util.Constants.*;
+import static org.reactivetales.blog.util.Constants.ADMIN_NOT_FOUND_ERROR;
+import static org.reactivetales.blog.util.Constants.OLD_PASSWORD_DOES_NOT_MATCH_USER_PASSWORD;
 
 @Service
 @RequiredArgsConstructor
@@ -39,10 +40,9 @@ public class AuthService {
      * @param request update admin request
      */
     public User updateAdmin(UpdateAdminRequest request) {
-        User admin = userRepository.findById(request.getId())
-                .orElseThrow(() -> new EntityNotFoundException(ADMIN_NOT_AUTHENTICATED_ERROR));
+        User admin = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        admin.setUsername(request.getUsername());
+        admin.setUsername(request.getEmail());
         admin.setEmail(request.getEmail());
 
         SecurityContextHolder.getContext().setAuthentication(null);

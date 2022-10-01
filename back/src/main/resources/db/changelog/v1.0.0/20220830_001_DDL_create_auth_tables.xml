@@ -42,7 +42,7 @@
 
         <insert tableName="user_details">
             <column name="id"               value="1"/>
-            <column name="username"         value="admin"/>
+            <column name="username"         value="admin@admin.com"/>
             <column name="email"            value="admin@admin.com"/>
             <column name="password"         value="$2a$08$eRBiVM4UudoMv.qcBsdsC.fIqbxuaViJV7aFxLDIDlBSRkxiarTRC"/> <!-- temporary password "admin" -->
         </insert>

@@ -3,7 +3,7 @@
  * Links
  */
 export const BACK_URL = "http://localhost:8080/api/v1"
-export const AUTH_URL = BACK_URL + "/auth";
+export const AUTH_URL = BACK_URL + "/admin/auth";
 
 /**
  * Additional
