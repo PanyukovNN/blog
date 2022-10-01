@@ -16,7 +16,8 @@ import {ReactNotifications} from 'react-notifications-component';
 import RequireAuth from './service/RequireAuth';
 import RedirectAfterAuth from "./service/RedirectAfterAuth";
 import { LoginPage } from './pages/auth/LoginPage';
-import {RegistrationPage} from "./pages/auth/RegistratioinPage";
+import {UpdateAdminPage} from "./pages/auth/UpdateAdminPage";
+import {ChangePasswordPage} from "./pages/auth/ChangePasswordPage";
 import {isLoggedIn} from "./service/AuthService";
 
 function App() {
@@ -34,8 +35,9 @@ function App() {
                             <Route path="/editor" element={<RequireAuth><ArticleEditor key={"/editor"}/></RequireAuth>}/>
                             <Route path="/editor/:id" element={<RequireAuth><ArticleEditor key={"/editor/id"}/></RequireAuth>}/>
 
-                            <Route path="/sign-in" element={<RedirectAfterAuth><LoginPage /></RedirectAfterAuth>} />
-                            <Route path="/sign-up" element={<RedirectAfterAuth><RegistrationPage /></RedirectAfterAuth>} />
+                            <Route path="/sign-in" element={<RedirectAfterAuth><LoginPage/></RedirectAfterAuth>}/>
+                            <Route path="/update-admin" element={<RequireAuth><UpdateAdminPage /></RequireAuth>} />
+                            <Route path="/change-password" element={<RequireAuth><ChangePasswordPage /></RequireAuth>} />
 
                             <Route path="*" element={<NotFoundErrorPage/>}/>
                             <Route path="/network-error" element={<NetworkErrorPage/>}/>

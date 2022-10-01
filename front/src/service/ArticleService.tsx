@@ -2,7 +2,6 @@ import axios from "axios";
 import {IArticle, IArticlePage, ICreateUpdateArticleRequest, NotificationType} from "../util/CommonTypes";
 import {BACK_URL, DEFAULT_ARTICLES_PAGE_SIZE} from "../util/Constants";
 import {showNotification} from "./NotificationService";
-import {getAccessToken} from "./AuthService";
 
 export async function fetchArticlesPage(pageNumber?: number, pageSize?: number) {
     try {

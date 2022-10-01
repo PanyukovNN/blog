@@ -23,3 +23,9 @@ export enum NotificationType {
     SUCCESS = "success",
     ERROR   = "danger"
 }
+
+export enum SignFormType {
+    UPDATE_ADMIN,
+    CHANGE_PASSWORD,
+    SIGN_IN
+}
