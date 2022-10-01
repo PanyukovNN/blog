@@ -6,9 +6,9 @@ import 'tinymce/skins/ui/oxide/content.min.css';
 import React from "react";
 import {ArticleList} from "./pages/ArticleList";
 import {NotFoundErrorPage} from "./pages/exception/NotFoundErrorPage";
-import {NavbarComponent} from "./components/NavbarComponent";
+import {AdminNavbarComponent} from "./components/AdminNavbarComponent";
 import {NetworkErrorPage} from "./pages/exception/NetworkErrorPage";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes, useNavigate} from "react-router-dom";
 import {Article} from "./pages/Article";
 import {ArticleEditor} from "./pages/ArticleEditor";
 import {FooterComponent} from "./components/FooterComponent";
@@ -19,6 +19,8 @@ import { LoginPage } from './pages/auth/LoginPage';
 import {UpdateAdminPage} from "./pages/auth/UpdateAdminPage";
 import {ChangePasswordPage} from "./pages/auth/ChangePasswordPage";
 import {isLoggedIn} from "./service/AuthService";
+import {NavigationPanel} from "./components/NavigationPanel";
+import {MainPhotoComponent} from "./components/MainPhotoComponent";
 
 function App() {
 
@@ -27,8 +29,12 @@ function App() {
             <ReactNotifications />
 
                 <Router>
-                    {isLoggedIn() && <NavbarComponent/>}
+                    {isLoggedIn() && <AdminNavbarComponent/>}
                     <div className="content">
+                        <MainPhotoComponent/>
+
+                        <NavigationPanel/>
+
                         <Routes>
                             <Route path="/" element={<ArticleList/>}/>
                             <Route path="/article/:id" element={<Article/>}/>

@@ -2,14 +2,14 @@ import '../App.css';
 import React, {CSSProperties, FC} from 'react';
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import { LinkContainer } from 'react-router-bootstrap';
-import {getUser, signOut} from "../service/AuthService";
+import {getUserEmail, signOut} from "../service/AuthService";
 
 /**
  * Navigation panel component.
  *
  * @returns navigation panel component
  */
-export const NavbarComponent: FC = () => {
+export const AdminNavbarComponent: FC = () => {
 
     const pathname = window.location.pathname.split('?')[0];
 
@@ -26,7 +26,7 @@ export const NavbarComponent: FC = () => {
                         </LinkContainer>
 
                         <div className="navbar-right-side">
-                            <NavDropdown title={getUser()} id="basic-nav-dropdown">
+                            <NavDropdown title={getUserEmail()} id="basic-nav-dropdown">
                                 <NavDropdown.Item href="/update-admin">
                                     Change email
                                 </NavDropdown.Item>

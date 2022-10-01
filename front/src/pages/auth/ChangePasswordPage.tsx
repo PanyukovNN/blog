@@ -6,7 +6,7 @@ import {SignFormType} from "../../util/CommonTypes";
 /**
  * Change admin password page
  *
- * @returns page
+ * @returns update password page
  */
 export const ChangePasswordPage = () => {
 

@@ -7,7 +7,6 @@ import {IArticlePage} from '../util/CommonTypes';
 import {renderPagination} from "../util/PaginationUtil";
 import {useNavigate} from "react-router";
 import {DEFAULT_ARTICLES_PAGE_SIZE} from "../util/Constants";
-import mainPhotoPath from "../resources/main-photo.jpg";
 
 /**
  * Main page with articles list
@@ -53,12 +52,6 @@ export const ArticleList : FC = () => {
 
     return (
         <div className="articles-list article-width">
-            <div className={"main-photo-wrap"}>
-                <img src={mainPhotoPath} alt={"Here must be my photo"}/>
-            </div>
-
-            <div className={"navigation"}></div>
-
             {articlesLoading && (
                 <Spinner className="editor-spinner" animation="border" />
             )}
