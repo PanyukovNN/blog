@@ -18,6 +18,21 @@ html {
     margin-left: auto;
 }
 
+/* nav panel for users */
+.navigation-panel {
+    margin-bottom: 60px;
+
+    text-align: center;
+}
+.navigation-panel-link {
+    margin: 10px;
+
+    font-family: "Helvetica", serif;
+    font-size: 20px;
+    font-weight: lighter;
+    text-decoration: underline;
+}
+
 h1 {
     font-size: 2.5rem !important;
     line-height: 2.5rem !important;
@@ -34,6 +49,11 @@ h2 {
 }
 
 .content {
+    width: 600px;
+
+    margin-left: auto;
+    margin-right: auto;
+
     /* Сумма отступов, для прибития футера к низу */
     min-height: calc(100vh - 198px);
 
@@ -51,6 +71,7 @@ h2 {
     border-radius: 50%;
 
     text-align: center;
+    cursor: pointer;
 }
 
 .main-photo-wrap img {
@@ -85,6 +106,7 @@ h2 {
     font-size: 1rem;
     line-height: 1rem;
 }
+.navigation-panel-link,
 .article-list-element-header {
     margin-bottom: 15px;
 
@@ -92,6 +114,7 @@ h2 {
 
     transition: .2s ease-in-out;
 }
+.navigation-panel-link:hover,
 .article-list-element-header:hover,
 .article-list-element-continue-link:hover {
     color: #4c8eab;

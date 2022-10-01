@@ -4,9 +4,9 @@ import {SignForm} from "../../components/auth/SignForm";
 import {SignFormType} from "../../util/CommonTypes";
 
 /**
- * Страница регистрации нового пользователя
+ * Update admin information page
  *
- * @returns страница регистрации
+ * @returns update admin page
  */
 export const UpdateAdminPage = () => {
 

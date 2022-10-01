@@ -96,10 +96,10 @@ export function getAccessToken() : string {
 }
 
 /**
- * Взять данные о пользователе из локально хранилища
+ * Get user email from cookie
  *
- * @returns {boolean} пользователь
+ * @returns {boolean} user email
  */
-export function getUser() {
+export function getUserEmail() : string | null {
     return cookies.get("email");
 }
