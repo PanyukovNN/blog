@@ -38,7 +38,7 @@ public class ArticleController {
     public Page<ArticleResponse> page(@RequestParam(required = false, defaultValue = "0")
                                       @Min(value = 0, message = "Page number couldn't be less than 0")
                                       Integer number,
-                                           @RequestParam(required = false, defaultValue = DEFAULT_ARTICLE_PAGE_SIZE)
+                                      @RequestParam(required = false, defaultValue = DEFAULT_ARTICLE_PAGE_SIZE)
                                       @Min(value = 1, message = "Page size couldn't be less than 1")
                                       @Max(value = 20, message = "Page size couldn't be grater than 1")
                                       Integer size) {
