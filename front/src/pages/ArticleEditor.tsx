@@ -1,11 +1,11 @@
 import '../App.css';
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router";
 import Button from "react-bootstrap/Button";
-import {Editor} from "@tinymce/tinymce-react/lib/cjs/main/ts";
 import Spinner from "react-bootstrap/Spinner";
 import {fetchArticle, createUpdateArticle} from "../service/ArticleService";
 import { IArticle, ICreateUpdateArticleRequest } from '../util/CommonTypes';
+import {Editor} from "@tinymce/tinymce-react";
 
 /**
  * Editor page
@@ -101,7 +101,6 @@ export const ArticleEditor: FC = () => {
             )}
 
             <Editor
-                tinymceScriptSrc="https://unpkg.com/tinymce@5.10.3/tinymce.min.js"
                 initialValue={article?.content}
                 onEditorChange={(newText) => setText(newText)}
                 disabled={articleLoading}
@@ -109,6 +108,10 @@ export const ArticleEditor: FC = () => {
                     setEditorLoading(false);
                 }}
                 init={{
+                    init_instance_callback: function (editor) { // removes warning
+                        var freeTiny = document.querySelector('.tox .tox-notification--in') as any;
+                        freeTiny.style.display = 'none';
+                    },
                     height: 500,
                     max_height: 1000,
                     menubar: false,
@@ -120,13 +123,43 @@ export const ArticleEditor: FC = () => {
                     plugins: [
                         'advlist autolink lists link image charmap print preview anchor',
                         'searchreplace visualblocks code codesample fullscreen',
-                        'insertdatetime media table paste help wordcount'
+                        'insertdatetime media table paste help wordcount importcss'
                     ],
                     toolbar1: 'undo redo | styleselect | ' +
                         'bold italic codesample backcolor | alignleft aligncenter ' +
                         'alignright alignjustify | bullist numlist outdent indent',
-                    content_style: 'body { font-family:Fira Sans,sans-serif; font-size:14px } ' +
-                        'h2 {font-size: 1.25rem; line-height: 1.625; font-weight: 500 }',
+                    content_style:
+                        'h2 {' +
+                        '    font-size: 1.25rem !important;' +
+                        '    line-height: 1.625 !important;' +
+                        '    font-weight: 500 !important;' +
+                        '    margin: 0 !important;' +
+                        '}' +
+                        'hr {' +
+                        '    margin: 0 !important;' +
+                        '    display: flex !important;' +
+                        '}' +
+                        '.section-divider {' +
+                        '    color: transparent;' +
+                        '    text-align: center;' +
+                        '    font-size: 50px;' +
+                        '    position: relative;' +
+                        '' +
+                        '    height: 120px;' +
+                        '}' +
+                        '.section-divider::after {' +
+                        '    content: "";' +
+                        '    position: absolute;' +
+                        '    width: .10em;' +
+                        '    height: .10em;' +
+                        '    border-radius: 50%;' +
+                        '    background: #a7b0b8;' +
+                        '    bottom: 58px;' +
+                        '    left: 50%;' +
+                        '    transform: translateX(-50%);' +
+                        '    filter: drop-shadow(.6em 0px 0px #a7b0b8)' +
+                        '    drop-shadow(-.6em 0px 0px #a7b0b8)' +
+                        '}'
                 }}
             />
 
