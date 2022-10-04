@@ -61,9 +61,11 @@ export const Article: FC = () => {
                 <Spinner className="editor-spinner" animation="border" />
             )}
 
-            {!articleLoading && <div className="article-control-btns-wrap">
-                <Button variant="outline-primary" onClick={handleEdit}>Редактировать</Button>
-                <Button variant="outline-danger" onClick={handleDelete}>Удалить</Button>
+            {!articleLoading && <div className="article-control-btns-block">
+                <div className={"article-control-btns-wrap"}>
+                    <Button className={"article-control-btn"} variant="outline-primary" onClick={handleEdit}>Редактировать</Button>
+                    <Button className={"article-control-btn"} variant="outline-danger" onClick={handleDelete}>Удалить</Button>
+                </div>
             </div>}
 
             <h1 className="article-header">
