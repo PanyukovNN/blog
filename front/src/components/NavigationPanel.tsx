@@ -1,6 +1,6 @@
 import '../App.css';
 import React, {FC} from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 /**
  * Navigation panel component.
@@ -11,15 +11,17 @@ export const NavigationPanel: FC = () => {
 
     const navigate = useNavigate();
 
-    const navigateToHomePage = () => {
+    const navigateToHomePage = (e : any) => {
+        e.preventDefault()
+
         navigate("/", { replace: true });
     }
 
     return (
         <div className={"navigation-panel"}>
-            <span className={"navigation-panel-link"} onClick={navigateToHomePage}>Home</span>
+            <a className={"navigation-panel-link"} onClick={navigateToHomePage} href="/">Home</a>
 
-            <span className={"navigation-panel-link"} onClick={navigateToHomePage}>About me</span>
+            <a className={"navigation-panel-link"} onClick={navigateToHomePage} href="/">About me</a>
         </div>
     )
 }

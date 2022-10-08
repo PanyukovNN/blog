@@ -22,9 +22,6 @@ project("back") {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven {
-            url = uri("https://raw.githubusercontent.com/PanyukovNN/reactive-jdbc-adapter/master/maven-repo")
-        }
     }
 
     tasks.withType(JavaCompile) {
