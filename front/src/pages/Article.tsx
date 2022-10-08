@@ -6,6 +6,7 @@ import {deleteArticle, fetchArticle} from "../service/ArticleService";
 import parse from "html-react-parser";
 import {IArticle} from "../util/CommonTypes";
 import Spinner from "react-bootstrap/Spinner";
+import {isLoggedIn} from "../service/AuthService";
 
 /**
  * Article page
@@ -61,7 +62,7 @@ export const Article: FC = () => {
                 <Spinner className="editor-spinner" animation="border" />
             )}
 
-            {!articleLoading && <div className="article-control-btns-block">
+            {!articleLoading && isLoggedIn() && <div className="article-control-btns-block">
                 <div className={"article-control-btns-wrap"}>
                     <Button className={"article-control-btn"} variant="outline-primary" onClick={handleEdit}>Редактировать</Button>
                     <Button className={"article-control-btn"} variant="outline-danger" onClick={handleDelete}>Удалить</Button>
