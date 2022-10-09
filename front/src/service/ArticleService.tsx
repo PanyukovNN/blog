@@ -2,6 +2,7 @@ import axios from "axios";
 import {IArticle, IArticlePage, ICreateUpdateArticleRequest, NotificationType} from "../util/CommonTypes";
 import {BACK_URL, DEFAULT_ARTICLES_PAGE_SIZE} from "../util/Constants";
 import {showNotification} from "./NotificationService";
+import {signOut} from "./AuthService";
 
 export async function fetchArticlesPage(pageNumber?: number, pageSize?: number) {
     try {
@@ -85,10 +86,14 @@ function processError(error: any) {
         message = 'Unknown Error';
     }
 
+    if (message === "Forbidden") {
+        signOut();
+
+        window.location.href = "/"
+    }
+
     if (message === "Network Error") {
         window.location.href = "/network-error";
-
-        return;
     }
 
     showNotification(message, NotificationType.ERROR);

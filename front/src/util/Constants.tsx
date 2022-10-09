@@ -2,7 +2,8 @@
 /**
  * Links
  */
-export const BACK_URL = "http://localhost:8080/api/v1"
+export const BACKEND_HOST = process.env.REACT_APP_BACKEND_HOST;
+export const BACK_URL = BACKEND_HOST + "/api/v1"
 export const AUTH_URL = BACK_URL + "/admin/auth";
 
 /**
