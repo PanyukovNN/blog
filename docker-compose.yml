@@ -1,42 +1,40 @@
 version: '3.3'
 
 volumes:
-  reactive_tales_blog_postgres_volume:
+  blog_postgres_volume:
 
 secrets:
-  jwt_master_password:
+  jwt-secret:
     file: jwt-secret.txt
 
 services:
-  reactive_tales_back:
-    build: .
-    container_name: reactive_tales_back
+  blog_back:
+    build:
+      context: .
+      dockerfile: DockerfileBack
+    container_name: blog_back
     ports:
       - '7007:8080'
     depends_on:
-      - reactive_tales_blog_postgres
+      - blog_db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://reactive_tales_blog_postgres:5432/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://blog_db:5432/postgres
       FRONT_URL: front
-      JWT_SECRET: jwt_master_password
+      JWT_SECRET: jwt-secret
     secrets:
-      - jwt_master_password
-    networks:
-      - blog-network
+      - jwt-secret
 
-#  reactive_tales_front:
-#    build:
-#      context: front/.
-#      dockerfile: Dockerfile
-#    container_name: front
-#    ports:
-#      - 80:80
-#    networks:
-#      - blog-network
+  blog_front:
+    build:
+      context: .
+      dockerfile: DockerfileFront
+    container_name: blog_front
+    ports:
+      - '80:80'
 
-  reactive_tales_blog_postgres:
+  blog_db:
     image: postgres:latest
-    container_name: reactive_tales_blog_postgres
+    container_name: blog_db
     ports:
       - '5433:5432'
     environment:
@@ -44,9 +42,4 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
-      - reactive_tales_blog_postgres_volume:/var/lib/postgresql/data
-    networks:
-      - blog-network
-
-networks:
-  blog-network:
+      - blog_postgres_volume:/var/lib/postgresql/data

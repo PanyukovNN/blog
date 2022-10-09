@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 7000
   error:
     include-message: always
 
@@ -25,7 +25,7 @@ jasypt:
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
 
 jwt:
-  secret: abcd
+  secret: test
 
 logging:
   level:
