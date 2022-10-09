@@ -3,12 +3,16 @@ package org.reactivetales.blog.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivetales.blog.model.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Common exception handler
@@ -28,6 +32,21 @@ public class GlobalExceptionHandler {
 
         return ErrorResponse.builder()
                 .message(BAD_REQUEST_MSG)
+                .status(HttpStatus.BAD_REQUEST.value())
+                .build();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+        String invalidFieldsMessage = fieldErrors
+                .stream()
+                .map(FieldError::getDefaultMessage)
+                .collect(Collectors.joining("; "));
+
+        return ErrorResponse.builder()
+                .message(invalidFieldsMessage)
                 .status(HttpStatus.BAD_REQUEST.value())
                 .build();
     }
