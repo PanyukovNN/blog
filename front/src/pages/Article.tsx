@@ -69,9 +69,9 @@ export const Article: FC = () => {
                 </div>
             </div>}
 
-            <h1 className="article-header">
+            <div className="article-header">
                 {article?.header}
-            </h1>
+            </div>
 
             <div>
                 {article ? parse(article.content) : ""}

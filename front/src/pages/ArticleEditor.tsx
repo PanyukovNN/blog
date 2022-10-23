@@ -141,12 +141,21 @@ export const ArticleEditor: FC = () => {
                     plugins: [
                         'advlist autolink lists link image charmap print preview anchor',
                         'searchreplace visualblocks code codesample fullscreen',
-                        'insertdatetime media table paste help wordcount importcss'
+                        'insertdatetime media table paste help wordcount image hr'
                     ],
                     toolbar1: 'undo redo | styleselect | ' +
                         'bold italic codesample backcolor | alignleft aligncenter ' +
-                        'alignright alignjustify | bullist numlist outdent indent',
+                        'alignright alignjustify | bullist numlist outdent indent | image | hr'
+                    ,
+                    element_format : 'html',
+                    extended_valid_elements: "script[language|type|src]",
                     content_style:
+                        'h1 {' +
+                        '    font-size: 28px !important;' +
+                        '    line-height: 22px !important;' +
+                        '    margin: 3.14rem 0 0 0 !important;' +
+                        '    font-weight: 600 !important;' +
+                        '}' +
                         'h2 {' +
                         '    font-size: 1.25rem !important;' +
                         '    line-height: 1.625 !important;' +
@@ -154,18 +163,15 @@ export const ArticleEditor: FC = () => {
                         '    margin: 0 !important;' +
                         '}' +
                         'hr {' +
+                        '    border: none;' +
                         '    margin: 0 !important;' +
-                        '    display: flex !important;' +
-                        '}' +
-                        '.section-divider {' +
                         '    color: transparent;' +
                         '    text-align: center;' +
                         '    font-size: 50px;' +
                         '    position: relative;' +
-                        '' +
                         '    height: 120px;' +
                         '}' +
-                        '.section-divider::after {' +
+                        'hr::after {' +
                         '    content: "";' +
                         '    position: absolute;' +
                         '    width: .10em;' +
