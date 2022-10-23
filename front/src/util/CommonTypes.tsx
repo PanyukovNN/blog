@@ -2,6 +2,7 @@ export interface IArticle {
     id:                 string;
     header:             string;
     content:            string;
+    description:        string;
     creationDateTime?:  string;
 }
 
@@ -13,9 +14,10 @@ export interface IArticlePage {
 }
 
 export interface ICreateUpdateArticleRequest {
-    id      : string;
-    header  : string;
-    content : string;
+    id           : string;
+    header       : string;
+    content      : string;
+    plainContent : string;
 }
 
 export enum NotificationType {

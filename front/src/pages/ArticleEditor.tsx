@@ -3,8 +3,8 @@ import React, {FC, useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
-import {fetchArticle, createUpdateArticle} from "../service/ArticleService";
-import { IArticle, ICreateUpdateArticleRequest } from '../util/CommonTypes';
+import {createUpdateArticle, fetchArticle} from "../service/ArticleService";
+import {IArticle, ICreateUpdateArticleRequest} from '../util/CommonTypes';
 import {Editor} from "@tinymce/tinymce-react";
 
 /**
@@ -20,6 +20,8 @@ export const ArticleEditor: FC = () => {
 
     // Содержание статьи
     const [text, setText] = useState<string>("");
+    // Содержание статьи без html тегов, используется для генерации description
+    const [plainText, setPlainText] = useState<string>("");
     // Заголовок статьи
     const [header, setHeader] = useState<string>("");
     const [article, setArticle] = useState<IArticle | null>();
@@ -60,7 +62,8 @@ export const ArticleEditor: FC = () => {
         const createUpdateRequest: ICreateUpdateArticleRequest = {
             id: articleId ? articleId : "",
             header: header,
-            content: text
+            content: text,
+            plainContent: plainText
         }
 
         createUpdateArticle(createUpdateRequest)
@@ -82,30 +85,45 @@ export const ArticleEditor: FC = () => {
 
     const handleToArticle = () => {
         if (article) {
-            navigate("/article/" + article.id, { replace: true });
+            navigate("/article/" + article.id, {replace: true});
         }
+    }
+
+    /**
+     * Sets header value and autosize height of textarea
+     *
+     * @param e textarea component
+     */
+    function handleChangeTextarea(e: any) {
+        setHeader(e.target.value)
+
+        e.target.style.height = 'inherit';
+        e.target.style.height = e.target.scrollHeight + 'px';
     }
 
     return (
         <div className="article-editor article-width">
             {!editorLoading && <h1>
-                <input className="article-header"
-                       type="text"
-                       onChange={(event) => setHeader(event.target.value)}
-                       value={header}
-                       placeholder={"Заголовок"}/>
+                <textarea className="article-header"
+                          onChange={(e) => handleChangeTextarea(e)}
+                          value={header}
+                          placeholder={"Заголовок"}/>
             </h1>}
 
             {editorLoading && (
-                <Spinner className="editor-spinner" animation="border" />
+                <Spinner className="editor-spinner" animation="border"/>
             )}
 
             <Editor
                 initialValue={article?.content}
-                onEditorChange={(newText) => setText(newText)}
+                onEditorChange={(newText, editor) => {
+                    setPlainText(editor.getBody().textContent as string);
+                    setText(newText)
+                }}
                 disabled={articleLoading}
-                onInit={() => {
+                onInit={(event, editor) => {
                     setEditorLoading(false);
+                    setPlainText(editor.getBody().textContent as string);
                 }}
                 init={{
                     init_instance_callback: function (editor) { // removes warning
@@ -117,8 +135,8 @@ export const ArticleEditor: FC = () => {
                     menubar: false,
                     branding: false,
                     style_formats: [
-                        { title: 'Заголовок', block: 'h2'},
-                        { title: 'Текст', format: 'p' },
+                        {title: 'Заголовок', block: 'h2'},
+                        {title: 'Текст', format: 'p'},
                     ],
                     plugins: [
                         'advlist autolink lists link image charmap print preview anchor',
@@ -168,7 +186,7 @@ export const ArticleEditor: FC = () => {
                         variant="outline-primary"
                         onClick={handleSave}
                         disabled={articleLoading}>
-                    {updatingLoading && (<Spinner className="editor-spinner" size="sm" animation="border" />)}
+                    {updatingLoading && (<Spinner className="editor-spinner" size="sm" animation="border"/>)}
                     {!updatingLoading && articleId ? 'Обновить' : 'Сохранить'}
                 </Button>
             )}

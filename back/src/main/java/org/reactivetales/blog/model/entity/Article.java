@@ -26,6 +26,13 @@ public class Article {
     private String header;
 
     /**
+     * Article description.
+     * Created from content.
+     */
+    @Column(columnDefinition="VARCHAR")
+    private String description;
+
+    /**
      * Article content.
      * Attribute columnDefinition="VARCHAR" is necessary for automatic creating timestamp column with no size limit.
      */

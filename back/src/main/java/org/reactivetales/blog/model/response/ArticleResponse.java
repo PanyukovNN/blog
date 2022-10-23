@@ -12,5 +12,6 @@ public class ArticleResponse implements Serializable {
     private String id;
     private String header;
     private String content;
+    private String description;
     private String creationDateTime;
 }
