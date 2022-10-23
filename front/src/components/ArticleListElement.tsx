@@ -24,9 +24,9 @@ export const ArticleListElement: FC<ArticleListElementProps> = ({article}) => {
 
     return (
         <article className="article-list-element">
-            <h1 className="article-list-element-header" onClick={navigateToArticlePage}>
+            <div className="article-list-element-header" onClick={navigateToArticlePage}>
                 {article.header}
-            </h1>
+            </div>
 
             <div className="article-list-element-top">
                 <div className="article-list-element-creation-date-time">
