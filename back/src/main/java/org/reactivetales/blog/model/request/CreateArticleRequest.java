@@ -14,4 +14,7 @@ public class CreateArticleRequest {
 
     @NotEmpty(message = "content can't be null")
     private String content;
+
+    @NotEmpty(message = "plainContent can't be null")
+    private String plainContent;
 }

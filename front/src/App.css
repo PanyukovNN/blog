@@ -1,5 +1,7 @@
 html {
     font-family: "Cambria","Georgia","Times New Roman", serif !important;
+
+    word-wrap: break-word;
 }
 
 /* navbar - only for admin */
@@ -36,12 +38,12 @@ html {
 }
 
 h1 {
-    font-size: 2.5rem !important;
-    line-height: 2.5rem !important;
+    font-size: 32px !important;
+    line-height: 40px !important;
     margin: 0 0 12px !important;
-    font-weight: 500 !important;
+    font-weight: 700 !important;
 
-    font-family: "Cambria","Georgia","Times New Roman", serif !important;
+    font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
 .content {
@@ -151,6 +153,9 @@ h1 {
     width: 100%;
 
     margin-bottom: 15px;
+
+    overflow: hidden;
+    resize: none;
 
     border: none;
 }

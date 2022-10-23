@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     private static final String BAD_REQUEST_MSG = "Wrong request structure or parameters";
-    private static final String ENTITY_NOT_FOUND_MSG = "Requested page not found";
+    private static final String ENTITY_NOT_FOUND_MSG = "Requested entity not found";
     private static final String INTERNAL_SERVER_ERROR_MSG = "Something's gone wrong";
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

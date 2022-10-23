@@ -14,13 +14,18 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityNotFoundException;
 
 import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 import static org.reactivetales.blog.util.Constants.ARTICLE_NOT_FOUND_ERROR;
 
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
+
+    private static final int DESCRIPTION_WORDS_COUNT = 50;
 
     private final ArticleRepository articleRepository;
 
@@ -47,8 +52,11 @@ public class ArticleService {
                 ? articleRepository.getReferenceById(createArticleRequest.getId())
                 : new Article();
 
+        String description = prepareDescription(createArticleRequest.getPlainContent());
+
         article.setHeader(createArticleRequest.getHeader());
         article.setContent(createArticleRequest.getContent());
+        article.setDescription(description);
         article.setCreationDateTime(ZonedDateTime.now(timeZone.toZoneId()).toLocalDateTime());
         articleRepository.save(article);
 
@@ -57,5 +65,21 @@ public class ArticleService {
 
     public void delete(String id) {
         articleRepository.deleteById(id);
+    }
+
+    private String prepareDescription(String plainContent) {
+        if (!StringUtils.hasText(plainContent)) {
+            return "";
+        }
+
+        List<String> contentWords = Arrays.asList(plainContent.split(" "));
+
+        String postfix = contentWords.size() > DESCRIPTION_WORDS_COUNT
+                ? "..."
+                : "";
+
+        return contentWords.stream()
+                .limit(DESCRIPTION_WORDS_COUNT)
+                .collect(Collectors.joining(" ")) + postfix;
     }
 }

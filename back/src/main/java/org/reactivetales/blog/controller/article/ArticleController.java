@@ -3,13 +3,14 @@ package org.reactivetales.blog.controller.article;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.reactivetales.blog.model.response.ArticleResponse;
 import org.reactivetales.blog.model.request.CreateArticleRequest;
+import org.reactivetales.blog.model.response.ArticleResponse;
 import org.reactivetales.blog.service.ArticleService;
 import org.reactivetales.blog.service.mapper.ArticleMapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-
 import java.util.TimeZone;
 
 import static org.reactivetales.blog.util.Constants.DEFAULT_ARTICLE_PAGE_SIZE;
@@ -35,6 +35,7 @@ public class ArticleController {
 
     @GetMapping("/page")
     @Operation(summary = "get articles page")
+    @Cacheable(value = "articlePage")
     public Page<ArticleResponse> page(@RequestParam(required = false, defaultValue = "0")
                                       @Min(value = 0, message = "Page number couldn't be less than 0")
                                       Integer number,
@@ -58,6 +59,7 @@ public class ArticleController {
     @PostMapping("/admin/create-update")
     @Operation(summary = "create or update article")
     @CachePut(value = "articles", key = "#result.id")
+    @CacheEvict(value = "articlePage", allEntries = true)
     public ArticleResponse createOrUpdate(@RequestBody @Valid CreateArticleRequest createArticleRequest,
                                           TimeZone timeZone) {
         return articleMapper.convert(
@@ -67,7 +69,10 @@ public class ArticleController {
 
     @DeleteMapping(value = "/admin/{id}")
     @Operation(summary = "delete article by id")
-    @CacheEvict(value = "articles", key = "#id")
+    @Caching(evict = {
+            @CacheEvict(value = "articles", key = "#id"),
+            @CacheEvict(value = "articlePage", allEntries = true)
+    })
     public void delete(@PathVariable String id) {
         articleService.delete(id);
     }

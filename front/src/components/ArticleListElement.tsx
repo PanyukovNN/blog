@@ -35,7 +35,7 @@ export const ArticleListElement: FC<ArticleListElementProps> = ({article}) => {
             </div>
 
             <div className="article-list-element-description">
-                {parse(article.content)}
+                {article.description ? parse(article.description) : ""}
             </div>
 
             <div className="article-list-element-continue-link" onClick={navigateToArticlePage}>
